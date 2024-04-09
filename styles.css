@@ -1,0 +1,174 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-container img {
+    height: 100px;
+    /* oder eine andere passende Größe */
+    width: auto;
+    display: block;
+    margin: 0 auto 20px;
+    /* Zentriert das Bild im Container */
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+.form-control input {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.links {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.links a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+
+/* Stile für den Sprachumschalter hinzufügen */
+
+.language-switcher {
+    position: absolute;
+    top: 10px;
+    /* Abstand von oben */
+    right: 10px;
+    /* Abstand von rechts */
+}
+
+#language-selector {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+body,
+html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6;
+    /* Oder eine andere Hintergrundfarbe deiner Wahl */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    /* oder die gewünschte Breite */
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    /* Dunkle Schriftfarbe für den Titel */
+    margin-bottom: 20px;
+}
+
+.register-form input {
+    width: calc(100% - 20px);
+    /* Subtrahiert das doppelte des inneren Abstandes */
+    padding: 10px;
+    margin-bottom: 10px;
+    /* Abstand zwischen den Eingabefeldern */
+    border: 1px solid #ccc;
+    /* Grenzfarbe */
+    border-radius: 4px;
+    /* Abgerundete Ecken für das Eingabefeld */
+}
+
+.register-form button {
+    padding: 10px;
+    border: none;
+    background-color: #007bff;
+    /* Blauer Hintergrund für den Button */
+    color: white;
+    /* Weiße Schriftfarbe für den Button */
+    border-radius: 4px;
+    /* Abgerundete Ecken für den Button */
+    cursor: pointer;
+    /* Zeiger-Cursor, wenn man über den Button fährt */
+    margin-top: 10px;
+    /* Abstand von dem letzten Eingabefeld */
+}
+
+.register-form button:hover {
+    background-color: #0056b3;
+    /* Dunkleres Blau beim Hover */
+}
+
+
+/* Wenn du zusätzliche Links oder Text hast, wie z.B. 'Zurück zum Login': */
+
+.register-form a {
+    text-align: center;
+    display: block;
+    /* Stellt sicher, dass der Link seine eigene Zeile hat */
+    margin-top: 15px;
+    color: #007bff;
+    /* Blaue Schriftfarbe für den Link */
+    text-decoration: none;
+    /* Keine Unterstreichung für den Link */
+}
+
+.register-form a:hover {
+    text-decoration: underline;
+    /* Unterstreichung beim Hover für den Link */
+}

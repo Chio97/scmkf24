@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Anmeldung</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <!-- Andere Navigations- oder Header-Elemente -->
+
+        <!-- Sprachumschalter Dropdown hinzufügen -->
+        <div class="language-switcher">
+            <!-- Füge irgendwo im Header oder in einer Navigationsleiste hinzu -->
+            <select id="language-selector" onchange="location = this.value;">
+                <option value="index.html">Deutsch</option>
+                <option value="login_en.html">English</option>
+            </select>
+        </div>
+    </header>
+    <div class="login-container form-control">
+        <form class="login-form" action="/login" method="post">
+            <div class="logo-container">
+                <img height="100" src="images/logo.png" alt="Logo">
+            </div>
+            <div class="form-control">
+                <input type="text" id="username" placeholder="Benutzername">
+            </div>
+            <div class="form-control">
+                <input type="password" id="password" placeholder="Kennwort">
+            </div>
+            <div class="form-control">
+                <a href="hauptseite.html" class="button">Einlogen</a>
+            </div>
+            <div class="links">
+                <!-- Andere HTML-Inhalte -->
+                <a href="registrieren.html">Erstell ein neues Konto</a>
+            </div>
+
+        </form>
+    </div>
+    <script src="js/language-switcher.js"></script>
+</body>
+
+</html>
+
+
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registrierung</title>
+    <!-- Stelle sicher, dass du auch hier CSS einbindest -->
+    <link rel="stylesheet" href="path/to/your/css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="register-container">
+        <form class="register-form" action="path/to/your/registration_handler" method="post">
+            <h2>Konto erstellen</h2>
+            <input type="text" id="new-username" name="username" placeholder="Benutzername" required>
+            <input type="email" id="new-email" name="email" placeholder="E-Mail" required>
+            <input type="name" id="new-name" name="name" placeholder="Name" required>
+            <input type="vorname" id="new-vorname" name="vorname" placeholder="Vorname" required>
+            <input type="addresse" id="new-addresse" name="addresse" placeholder="Addresse" required>
+            <input type="plz" id="new-plz" name="plz" placeholder="Postleitzahl" required>
+            <input type="stadt" id="new-stadt" name="stadt" placeholder="Stadt" required>
+            <input type="unternehmen" id="new-unternehmen" name="Unternehmen" placeholder="Unternehmen" required>
+            <input type="beruf" id="new-beruf" name="beruf" placeholder="Beruf" required>
+            <input type="password" id="new-password" name="password" placeholder="Kennwort" required>
+            <input type="password" id="confirm-password" name="confirmPassword" placeholder="Kennwort bestätigen" required>
+            <button type="submit">Registrieren</button>
+        </form>
+    </div>
+
+</body>
+
+</html>
