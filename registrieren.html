@@ -12,19 +12,18 @@
 <body>
 
     <div class="register-container">
-        <form class="register-form" action="path/to/your/registration_handler" method="post">
+        <form class="register-form" action="connect.php" method="post">
             <h2>Konto erstellen</h2>
-            <input type="text" id="new-username" name="username" placeholder="Benutzername" required>
-            <input type="email" id="new-email" name="email" placeholder="E-Mail" required>
-            <input type="name" id="new-name" name="name" placeholder="Name" required>
-            <input type="vorname" id="new-vorname" name="vorname" placeholder="Vorname" required>
-            <input type="addresse" id="new-addresse" name="addresse" placeholder="Addresse" required>
-            <input type="plz" id="new-plz" name="plz" placeholder="Postleitzahl" required>
-            <input type="stadt" id="new-stadt" name="stadt" placeholder="Stadt" required>
-            <input type="unternehmen" id="new-unternehmen" name="Unternehmen" placeholder="Unternehmen" required>
-            <input type="beruf" id="new-beruf" name="beruf" placeholder="Beruf" required>
-            <input type="password" id="new-password" name="password" placeholder="Kennwort" required>
-            <input type="password" id="confirm-password" name="confirmPassword" placeholder="Kennwort bestätigen" required>
+            <input type="text" id="username" name="username" placeholder="Benutzername" required>
+            <input type="email" id="email" name="email" placeholder="E-Mail" required>
+            <input type="name" id="name" name="name" placeholder="Name" required>
+            <input type="vorname" id="vorname" name="vorname" placeholder="Vorname" required>
+            <input type="addresse" id="addresse" name="addresse" placeholder="Addresse" required>
+            <input type="number" id="plz" name="plz" placeholder="postleitzahl" required>
+            <input type="stadt" id="stadt" name="stadt" placeholder="stadt" required>
+            <input type="unternehmen" id="unternehmen" name="unternehmen" placeholder="Unternehmen" required>
+            <input type="beruf" id="beruf" name="beruf" placeholder="beruf" required>
+            <input type="password" id="password" name="password" placeholder="Kennwort" required>
             <button type="submit">Registrieren</button>
         </form>
     </div>
