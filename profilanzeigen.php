@@ -1,8 +1,43 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['benutzername'])) {
+    // Keine Session vorhanden, also Umleitung zur Login-Seite
+    header("Location: newindex.php");
+    exit;
+}
+?>
+<!doctype html>
+<html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hauptseite</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .card {
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-img-top {
+            height: 200px;
+            /* Fixiert die Höhe der Bilder */
+            object-fit: cover;
+            /* Sorgt dafür, dass die Bilder gut aussehen */
+        }
+        
+        .container.mt-4 {
+            margin-bottom: 330px;
+        }
+        
+    </style>
 </head>
 
 <body>
@@ -20,7 +55,7 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="mainseite.php">Haupseite</a>
+                        <a class="nav-link active" aria-current="page" href="mainseite.php">Hauptseite</a>
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -46,55 +81,61 @@
                         <img src="images/profil.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top"> Profil
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownProfileLink">
-                        <li><a class="dropdown-item" href="profil.php">Profil bearbeiten</a></li>
+                        <li><a class="dropdown-item" href="profilanzeigen.php">Profil bearbeiten</a></li>
                         <li><a class="dropdown-item" href="logout.php">Abmelden</a></li>
                     </ul>
                 </div>
             </div>
+
         </div>
     </nav>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <p class="fs-2"><strong>Impressum der ifm electronic gmbh</strong></p>
-                <div class="row">
-                    <div class="col-sm-7 col-xs-12">
-                        <div class="col-sm-12">
-                            <p><strong>Anschrift</strong><br /> ifm electronic gmbh<br /> Friedrichstr. 1<br /> 45128 Essen<br /> Telefon&nbsp;&nbsp;02 01 / 24 22-0<br /> Telefax&nbsp;&nbsp;02 01 / 24 22-1200<br /> E-Mail&nbsp;&nbsp;info@ifm.com
-                                <br />
-                                <br />
-                                <strong>Vorsitzender der Geschäftsführung</strong><br /> Michael Marhofer<br />
-                                <br />
-                                <strong>Geschäftsführer</strong><br /> Stefan von der Bey, Simon Evans, Osmir Ribeiro, Dr. Frank Stegherr, Andreas Welke<br />
-                                <br />
-                                <strong>Registergericht</strong><br /> Amtsgericht Essen,&nbsp;Registernummer HR B 1887<br />
-                                <br />
-                                <strong>Umsatzsteuer-Identifikationsnummer</strong><br /> DE 119 651 782<br />
-                                <br />
-                                <strong>Haftungshinweis</strong><br /> Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>
-                        </div>
+
+    <div class="container mt-4">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <a href="profil.php" class="card text-decoration-none text-dark">
+                    <img src="images/daten.png" class="card-img-top" alt="Meine Daten">
+                    <div class="card-body">
+                        <h5 class="card-title">Meine Daten</h5>
+                        <p class="card-text">Daten aktualisieren</p>
                     </div>
-                </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="passwort.php" class="card text-decoration-none text-dark">
+                    <img src="images/change-password-51.png" class="card-img-top" alt="Passwort ändern">
+                    <div class="card-body">
+                        <h5 class="card-title">Passwort</h5>
+                        <p class="card-text">Passwort ändern</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="reservierungen.php" class="card text-decoration-none text-dark">
+                    <img src="images/reservation.avif" class="card-img-top" alt="Meine Reservierungen">
+                    <div class="card-body">
+                        <h5 class="card-title">Meine Reservierungen</h5>
+                        <p class="card-text">Reservierungen angucken</p>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
+    <nav class="navbar bg-body-tertiary ">
 
-
-    <nav class="navbar bottom bg-body-tertiary">
-
-        <nav class="nav flex-column">
-            <a class="nav-link" href="agb.html">AGB</a>
-            <a class="nav-link" href="impressum.html">Impressum</a>
-            <a class="nav-link" href="datenschutz.html">Datenschutz</a>
+        <nav class="nav flex-column ">
+            <a class="nav-link " href="agb.html ">AGB</a>
+            <a class="nav-link " href="impressum.html ">Impressum</a>
+            <a class="nav-link " href="datenschutz.html ">Datenschutz</a>
         </nav>
-        <div class="footer-social">
-            <div class="footer-copyright">© ifm electronic gmbh 2024</div>
+        <div class="footer-social ">
+            <div class="footer-copyright ">© ifm electronic gmbh 2024</div>
         </div>
         <div class="footer-subsidiary" style="padding: 1%">
             <p><strong>ifm business solutions</strong><br /> Martinshardt 19<br /> 57074&nbsp;Siegen
             </p>
             <p><strong>Hotline 0800 / 16 16 16 4</strong><br />
-                <strong>E-Mail&nbsp;</strong><a href="mailto:info@ifm.com">info@ifm.com</a></p>
+                <strong>E-Mail&nbsp;</strong><a href="mailto:info@ifm.com ">info@ifm.com</a></p>
         </div>
     </nav>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js " integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz " crossorigin="anonymous "></script>

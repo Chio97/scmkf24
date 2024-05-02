@@ -22,22 +22,23 @@
         </div>
     </header>
     <div class="login-container form-control">
-        <form class="login-form" action="/login" method="post">
+        <form class="login-form" action="login.php" method="post">
             <div class="logo-container">
                 <img height="100" src="images/logo.png" alt="Logo">
             </div>
             <div class="form-control">
-                <input type="text" id="username" placeholder="Benutzername">
+                <input type="text" id="username" name="benutzername" placeholder="Benutzername">
             </div>
             <div class="form-control">
-                <input type="password" id="password" placeholder="Kennwort">
+                <input type="password" id="password" name="passwort" placeholder="Kennwort">
             </div>
-            <div class="form-control">
+            <input type="submit" class="btn btn-primary" value="Login" name="">
+            <!--  <div class="form-control">
                 <a href="mainseite.html" class="button">Einlogen</a>
-            </div>
+            </div>-->
             <div class="links">
                 <!-- Andere HTML-Inhalte -->
-                <a href="registrieren.html">Erstelle ein neues Konto</a>
+                <a href="register.html">Erstelle ein neues Konto</a>
             </div>
 
         </form>

@@ -11,5 +11,6 @@
             "password": "erdush123",
             "connectionTimeout": 30
         }
-    ]
+    ],
+    "liveServer.settings.port": 5501
 }
