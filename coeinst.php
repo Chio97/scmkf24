@@ -7,19 +7,27 @@
     <title>Hauptseite</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
+
 <?php
 session_start();
 include 'db.php'; // Stellen Sie sicher, dass Sie Ihre Datenbankverbindungsdatei richtig einbinden
-// Beispiel nach der Buchungslogik in buche_schulung.php
+
+if (!isset($_SESSION['lang'])) {
+    $_SESSION['lang'] = 'de'; // Standardmäßig Deutsch
+}
+if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'de'])) {
+    $_SESSION['lang'] = $_GET['lang']; // Sprache ändern, wenn über GET-Parameter angefordert
+}
+
+// Sprachdateien basierend auf der gewählten Sprache laden
+$lang = require 'languages/' . $_SESSION['lang'] . '.php';
 
 // Überprüfung, ob der Benutzername gesetzt ist, entweder über POST (bei einem Formularsubmit) oder über SESSION (wenn bereits gespeichert)
 if (isset($_POST['benutzername'])) {
     $benutzername = $_POST['benutzername'];
     $_SESSION['benutzername'] = $benutzername;
-    echo "<h3>Hi $vorname, $benutzername Willkommen bei der SCM Knowledge Factory!</h3>"; // Speichern in der Session für späteren Gebrauch
 } elseif (isset($_SESSION['benutzername'])) {
     $benutzername = $_SESSION['benutzername'];
-    echo "<h3>Hi , $benutzername Willkommen bei der SCM Knowledge Factory!</h3>";
 } else {
     die("Benutzername nicht gesetzt. Bitte stellen Sie sicher, dass Sie angemeldet sind.");
 }
@@ -35,6 +43,9 @@ $stmt = $conn->prepare("SELECT vorname, name, benutzername, email, unternehmen, 
 $stmt->bind_param("s", $benutzername);
 $stmt->execute();
 $result = $stmt->get_result();
+
+
+$userData = $result->fetch_assoc();
 
 // Abfragen für verfügbare Sprachen und Termine
 $sprachenQuery = "SELECT DISTINCT sprache FROM schulungen WHERE sprache IS NOT NULL";
@@ -56,8 +67,9 @@ if (isset($_SESSION['notification'])) {
 }
 
 ?> 
+
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <nav class="navbar bg-body-tertiary">
                 <div class="container-fluid">
@@ -71,35 +83,40 @@ if (isset($_SESSION['notification'])) {
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="mainseite.php">Hauptseite</a>
+                        <a class="nav-link active" aria-current="page" href="mainseite.php"><?= $lang['mainseite'] ?></a>
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Schulungen
+                            <?= $lang['training'] ?>
                 </a>
-                <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="opeinst.php">Operations für Einsteiger*innen</a></li>
-                                <li><a class="dropdown-item" href="opefort.php">Operations für Fortgeschrittene</a></li>
-                                <li><a class="dropdown-item" href="coeinst.php">Controlling für Einsteiger*innen</a></li>
-                                <li><a class="dropdown-item" href="cofortg.php">Controlling für Fortgeschrittene</a></li>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="opeinst.php"><?= $lang['operations_einst'] ?></a></li>
+                                <li><a class="dropdown-item" href="opefort.php"><?= $lang['operations_fort'] ?></a></li>
+                                <li><a class="dropdown-item" href="coeinst.php"><?= $lang['controlling_einst'] ?></a></li>
+                                <li><a class="dropdown-item" href="cofortg.php"><?= $lang['controlling_fort'] ?></a></li>
                             </ul>
                         </li>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mailto:serxhio.zani@berater.ifm">Kontakt</a>
+                        <a class="nav-link" href="kontakt.php"><?= $lang['contact'] ?></a>
                     </li>
                 </ul>
+
             </div>
             <div class="d-flex" style="width: 11%">
                 <div class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownProfileLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="images/profil.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">Profil
+                        <img src="images/profil.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top"> <?= $lang['profile'] ?>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownProfileLink">
-                    <li><a class="dropdown-item" href="profilanzeigen.php">Profil anzeigen</a></li>
-                    <li><a class="dropdown-item" href="logout.php">Abmelden</a></li>
+                        <li><a class="dropdown-item" href="profilanzeigen.php"><?= $lang['show_profile'] ?></a></li>
+                        <li><a class="dropdown-item" href="logout.php"><?= $lang['logout'] ?></a></li>
                     </ul>
                 </div>
+            </div>
+            <div class="d-flex" style="width: 11%">
+                <a href="?lang=de" class="btn btn-link">DE</a>
+                <a href="?lang=en" class="btn btn-link">EN</a>
             </div>
         </div>
     </nav>
@@ -116,33 +133,33 @@ if (isset($_SESSION['notification'])) {
             <!-- Spalte für die Karte -->
             <div class="col-lg-4 ">
                 <div class="card border-primary mb-3">
-                    <div class="card-header">Kursinformation</div>
+                    <div class="card-header"><?= $lang['kursinfo'] ?></div>
                     <div class="card-body text-primary">
-                        <h5 class="card-title">Kursdauer</h5>
-                        <p class="card-text">Eine Einsteiger Schulung dauert 8 Stunden + 1 Stunde Pause.</p>
-                        <h5 class="card-title">Veranstaltungsort</h5>
-                        <p class="card-text">Classroomschulung: The SUMMIT Siegen, Martinshardt 19, 57074 Siegen.</p>
-                        <h5 class="card-title">Zielgruppe</h5>
+                        <h5 class="card-title"><?= $lang['kursdauer'] ?></h5>
+                        <p class="card-text"><?= $lang['kursdauer_t'] ?></p>
+                        <h5 class="card-title"><?= $lang['veranstaltungsort'] ?></h5>
+                        <p class="card-text"><?= $lang['veranstaltungsort_t'] ?></p>
+                        <h5 class="card-title"><?= $lang['zielgruppe'] ?></h5>
                         <p class="card-text">Für die Bereiche Disposition und/oder Bestandscontrolling</p>
-                        <h5 class="card-title">Teilnahmegebühr</h5>
+                        <h5 class="card-title"><?= $lang['teilnehmergebühr'] ?></h5>
                         <p class="card-text">580 €</p>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary me-md-2 fs-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                                            Schulung buchen
+                        <?= $lang['buchen'] ?>
                                                         </button>
                         <!-- Modal -->
                         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog text-dark">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Buchen Sie jetzt eine Controlling Schulung für Fortgeschrittene</h1>
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Buchen Sie jetzt eine Controlling Schulung für Einsteiger*innen</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <form class="row g-3" method="POST" action="buche_coeinst.php">
                                             <div class="col-md-4">
                                             <select class="form-select" id="spracheSelect" required>
-                                                    <option selected disabled value="">Sprache des Kurses auswählen</option>
+                                                    <option selected disabled value=""><?= $lang['sprache_auswählen'] ?></option>
                                                     <?php
                                                     if ($sprachenResult->num_rows > 0) {
                                                         while($row = $sprachenResult->fetch_assoc()) {
@@ -154,7 +171,7 @@ if (isset($_SESSION['notification'])) {
                                             </div>
                                             <div class="col-md-4">
                                             <select class="form-select" id="schulungsartSelect" required>
-                                                <option selected disabled value="">Art auswählen</option>
+                                                <option selected disabled value=""><?= $lang['schulungsart_auswählen'] ?></option>
                                                 <?php
                                                 if ($schulungsartResult->num_rows > 0) {
                                                     while($row = $schulungsartResult->fetch_assoc()) {
@@ -166,7 +183,7 @@ if (isset($_SESSION['notification'])) {
                                             </div>
                                             <div class="col-md-4">
                                                 <select class="form-select" id="terminSelect" name="termin" required>
-                                                    <option selected disabled value="">Termin auswählen</option>
+                                                    <option selected disabled value=""><?= $lang['termin_auswählen'] ?></option>
                                                     <?php
                                                     if ($termineResult->num_rows > 0) {
                                                         while($row = $termineResult->fetch_assoc()) {
@@ -176,17 +193,17 @@ if (isset($_SESSION['notification'])) {
                                                     ?>
                                                 </select>
                                             </div>
-                                            <h5>Rechnungsadresse hinzufügen</h5>
+                                            <h5><?= $lang['rechnungsadresse'] ?></h5>
                                             <div class="col-md-4">
-                                                <label for="validationDefault01" class="form-label">Vorname</label>
-                                                <input type="text" class="form-control" id="validationDefault01" name="vorname" required>
+                                                <label for="validationDefault01" class="form-label"><?= $lang['vorname'] ?></label>
+                                                <input type="text" class="form-control" id="validationDefault01" value="<?php echo htmlspecialchars($userData['vorname'] ?? ''); ?>" name="traeger_vorname" required>
                                             </div>
                                             <div class="col-md-4">
-                                                <label for="validationDefault02" class="form-label">Nachname</label>
-                                                <input type="text" class="form-control" id="validationDefault02" name="nachname"required>
+                                                <label for="validationDefault02" class="form-label"><?= $lang['nachname'] ?></label>
+                                                <input type="text" class="form-control" id="validationDefault02" value="<?php echo htmlspecialchars($userData['name'] ?? ''); ?>"name="traeger_nachname"required>
                                             </div>
                                             <div class="col-md-4">
-                                                <label for="validationDefaultUsername" class="form-label">Benutzername</label>
+                                                <label for="validationDefaultUsername" class="form-label"><?= $lang['username'] ?></label>
                                                 <div class="input-group">
                                                     <span class="input-group-text" id="inputGroupPrepend2">@</span>
                                                     <!-- Fügen Sie den Wert aus der Session ein, wenn verfügbar -->
@@ -195,28 +212,28 @@ if (isset($_SESSION['notification'])) {
                                             </div>
 
                                             <div class="col-md-6">
-                                                <label for="validationDefault03" class="form-label">Straße</label>
-                                                <input type="text" class="form-control" id="validationDefault03" name="strasse" required>
+                                                <label for="validationDefault03" class="form-label"><?= $lang['straße'] ?></label>
+                                                <input type="text" class="form-control" id="validationDefault03" value="<?php echo htmlspecialchars($userData['adresse'] ?? ''); ?>" name="strasse" required>
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="validationDefault04" class="form-label">Stadt</label>
-                                                <input type="text" class="form-control" id="validationDefault03" name="stadt" required>
+                                                <label for="validationDefault04" class="form-label"><?= $lang['stadt'] ?></label>
+                                                <input type="text" class="form-control" id="validationDefault04" value="<?php echo htmlspecialchars($userData['stadt'] ?? ''); ?>" name="stadt" required>
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="validationDefault05" class="form-label">Postleitzahl</label>
-                                                <input type="text" class="form-control" id="validationDefault05" name="plz" required>
+                                                <label for="validationDefault05" class="form-label"><?= $lang['plz'] ?></label>
+                                                <input type="text" class="form-control" id="validationDefault05"  value="<?php echo htmlspecialchars($userData['plz'] ?? ''); ?>"name="plz" required>
                                             </div>
                                             <div class="col-12">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
                                                 <label class="form-check-label" for="invalidCheck2">
-                                                    Akzeptieren Sie die <a href="pdf/AGB.pdf" target="_blank">Bedingungen und Konditionen</a>
+                                                <?= $lang['akzeptieren'] ?> <a href="pdf/AGB.pdf" target="_blank"><?= $lang['bedingungen'] ?></a>
                                                 </label>
                                             </div>
                                             </div>
                                             <div class="col-12">
-                                                <button class="btn btn-primary" type="submit">Jetzt buchen</button>
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+                                                <button class="btn btn-primary" type="submit"><?= $lang['jetzt_buchen'] ?></button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?= $lang['close'] ?></button>
                                             </div>
                                             <input type="hidden" name="benutzername" value="<?php echo htmlspecialchars($benutzername); ?>">
                                         </form>
@@ -230,6 +247,7 @@ if (isset($_SESSION['notification'])) {
             </div>
 
         </div>
+    </div>
     </div>
     <div class="container-fluid">
         <p class="fs-2"><strong>Kennzahlen managen mit GIB Controlling</strong></p>
@@ -274,24 +292,23 @@ if (isset($_SESSION['notification'])) {
         </ul>
     </blockquote>
     <div class="container-fluid">
-        <p class="fs-2"><strong>Exklusives-Training online oder Offline </strong></p>
+        <p class="fs-2"><strong><?= $lang['exclusive'] ?> </strong></p>
         <blockquote class="blockquote">
-            <p>Sie möchten diese Schulung exklusiv für Ihr Unternehmen buchen? Für weitere Details wie Preis und Termine eine E-Mail an <a href="mailto:serxhio.zani@berater.ifm">serxhio.zani@berater.ifm</a> mit dem Betreff "Exklusives-Training" senden. Sie
-                werden eine Antwort in kurzer Zeit bekommen.
+            <p><?= $lang['exclusive_t1'] ?> <a href="mailto:serxhio.zani@berater.ifm">serxhio.zani@berater.ifm</a> <?= $lang['exclusive_t2'] ?>
             </p>
         </blockquote>
     </div>
-    <nav class="navbar bottom bg-body-tertiary">
+    <nav class="navbar bg-body-tertiary">
 
         <nav class="nav flex-column">
-            <a class="nav-link" href="agb.html">AGB</a>
+            <a class="nav-link" href="agb.html"><?= $lang['agb'] ?></a>
             <a class="nav-link" href="impressum.html">Impressum</a>
-            <a class="nav-link" href="datenschutz.html">Datenschutz</a>
+            <a class="nav-link" href="datenschutz.html"><?= $lang['datenschutz'] ?></a>
         </nav>
         <div class="footer-social">
             <div class="footer-copyright">© ifm electronic gmbh 2024</div>
         </div>
-        <div class="footer-subsidiary" style="padding: 1%">
+        <div class="footer-subsidiary"style="padding: 1%">
             <p><strong>ifm business solutions</strong><br /> Martinshardt 19<br /> 57074&nbsp;Siegen
             </p>
             <p><strong>Hotline 0800 / 16 16 16 4</strong><br />

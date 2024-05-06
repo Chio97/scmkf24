@@ -4,11 +4,11 @@ include 'db.php';  // Stellen Sie sicher, dass Ihre Datenbankverbindung korrekt 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Sicherstellen, dass alle benötigten Felder vorhanden sind.
-    if (isset($_POST['benutzername'], $_POST['termin'], $_POST['vorname'], $_POST['nachname'], $_POST['strasse'], $_POST['stadt'], $_POST['plz'])) {
+    if (isset($_POST['benutzername'], $_POST['termin'], $_POST['traeger_vorname'], $_POST['traeger_nachname'], $_POST['strasse'], $_POST['stadt'], $_POST['plz'])) {
         $benutzername = $_POST['benutzername'];
         $termin = $_POST['termin'];
-        $vorname = $_POST['vorname'];
-        $nachname = $_POST['nachname'];
+        $traeger_vorname = $_POST['traeger_vorname'];
+        $traeger_nachname = $_POST['traeger_nachname'];
         $strasse = $_POST['strasse'];
         $stadt = $_POST['stadt'];
         $plz = $_POST['plz'];
@@ -26,12 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         } else {
             // Führe die Buchung durch
-            $sql = "INSERT INTO reservierung (vorname, nachname, benutzername, strasse, stadt, plz, termin) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO reservierung (traeger_vorname, traeger_nachname, benutzername, strasse, stadt, plz, termin) VALUES (?, ?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             if ($stmt === false) {
                 $_SESSION['notification'] = ['status' => 'error', 'message' => 'Datenbankfehler: ' . $conn->error];
             } else {
-                $stmt->bind_param("sssssss", $vorname, $nachname, $benutzername, $strasse, $stadt, $plz, $termin);
+                $stmt->bind_param("sssssss", $traeger_vorname, $traeger_nachname, $benutzername, $strasse, $stadt, $plz, $termin);
                 if ($stmt->execute()) {
                     $_SESSION['notification'] = ['status' => 'success', 'message' => 'Die Schulung wurde erfolgreich gebucht! Sie können Ihre Reservierung bei Meine Reservierungen in Ihrem Profil anschauen!'];
                 } else {

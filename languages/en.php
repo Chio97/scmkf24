@@ -1,5 +1,6 @@
 <?php
 return [
+    'error' => "Username or Password is not correct!",
 'username' => 'Username',
 'password' => 'Password',
 'login' => 'Log in',
@@ -11,6 +12,10 @@ return [
     'logout' => 'Log out',
     'profile' => 'Profile',
     'show_profile' => 'Show profile',
+
+    'Benutzername oder Passwort ist falsch' => 'Username or password is not correct',
+
+
 'operations_einst' => 'Operations for beginners',
 'operations_fort' => 'Operations for advanced',
 'controlling_einst' => 'Controlling for beginners',
@@ -65,7 +70,20 @@ return [
 'exclusive_t1' => 'Would you like to book this training exclusively for your company? For further details such as price and dates, please send an e-mail to ',
 'exclusive_t2' => 'with the subject “Exclusive training”. You
                 will receive an answer within a short time',
-
+'buchen_op_f' => 'Book now an Operations training for advanced',
+'textblock1_ü' => 'Cockpit-controlled scheduling with GIB Operations',
+'textblock1_t' => 'What is cockpit-controlled scheduling? We will show you the objectives, measures and benefits using memorable practical examples. You will learn how to implement individual parameters and alerts and how to adapt selection settings
+                and layouts to your personal requirements. With the help of GIB Suite Operations and the alert monitor, you will be able to recognize critical situations at an early stage and initiate countermeasures in good time (missing parts situation for
+                production orders). Through the targeted use of the dashboards offered, you will be able to achieve greater transparency and clarity in the future. Depending on your needs, you can display specific information about storage locations
+                and plants, in single or multiple lines, in quantity or value, as required. Instruction in the use of supporting MRP parameters from the Formelwerk rounds off this workshop.',
+'ihrnutzen_t_o_f' => 'In future, you will be able to make optimum use of the modules extended range of functions for your operational requirements. You will be able to automatically calculate safety and reorder levels and easily reconcile the material master in SAP.',
+'erwartung_o_f1' => 'Adminstration',
+'erwartung_o_f2' => 'Extended function overview',
+'erwartung_o_f3' => 'Integration of the DCO and DCC modules',
+'an_wen_o_f1' => 'You are familiar with the basic functions in GIB Suite Controlling and Operations and would like to deepen your knowledge and use related functions.',
+'an_wen_o_f2' => 'You consider the safety and message inventories to be critical and are looking for ways to maintain parameters automatically.',
+'an_wen_o_f3' => 'As a product manager, you are curious about the administration of applications',
+'an_wen_o_f4' => 'You already work with the module on a daily basis'
 
 
     // Weitere Übersetzungen...

@@ -26,10 +26,8 @@ $lang = require 'languages/' . $_SESSION['lang'] . '.php';
 if (isset($_POST['benutzername'])) {
     $benutzername = $_POST['benutzername'];
     $_SESSION['benutzername'] = $benutzername;
-    echo "<h3>Hi $vorname, $benutzername Willkommen bei der SCM Knowledge Factory!</h3>"; // Speichern in der Session für späteren Gebrauch
 } elseif (isset($_SESSION['benutzername'])) {
     $benutzername = $_SESSION['benutzername'];
-    echo "<h3>Hi , $benutzername Willkommen bei der SCM Knowledge Factory!</h3>";
 } else {
     die("Benutzername nicht gesetzt. Bitte stellen Sie sicher, dass Sie angemeldet sind.");
 }
@@ -45,6 +43,8 @@ $stmt = $conn->prepare("SELECT vorname, name, benutzername, email, unternehmen, 
 $stmt->bind_param("s", $benutzername);
 $stmt->execute();
 $result = $stmt->get_result();
+
+$userData = $result->fetch_assoc();
 
 // Abfragen für verfügbare Sprachen und Termine
 $sprachenQuery = "SELECT DISTINCT sprache FROM schulungen WHERE sprache IS NOT NULL";
@@ -97,7 +97,7 @@ if (isset($_SESSION['notification'])) {
                         </li>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mailto:serxhio.zani@berater.ifm"><?= $lang['contact'] ?></a>
+                        <a class="nav-link" href="kontakt.php"><?= $lang['contact'] ?></a>
                     </li>
                 </ul>
 
@@ -195,32 +195,32 @@ if (isset($_SESSION['notification'])) {
                                             <h5><?= $lang['rechnungsadresse'] ?></h5>
                                             <div class="col-md-4">
                                                 <label for="validationDefault01" class="form-label"><?= $lang['vorname'] ?></label>
-                                                <input type="text" class="form-control" id="validationDefault01" name="vorname" required>
+                                                <input type="text" class="form-control" id="validationDefault01" value="<?php echo htmlspecialchars($userData['vorname'] ?? ''); ?>" name="traeger_vorname" required>
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="validationDefault02" class="form-label"><?= $lang['nachname'] ?></label>
-                                                <input type="text" class="form-control" id="validationDefault02" name="nachname"required>
+                                                <input type="text" class="form-control" id="validationDefault02" value="<?php echo htmlspecialchars($userData['name'] ?? ''); ?>" name="traeger_nachname"required>
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="validationDefaultUsername" class="form-label"><?= $lang['username'] ?></label>
                                                 <div class="input-group">
                                                     <span class="input-group-text" id="inputGroupPrepend2">@</span>
                                                     <!-- Fügen Sie den Wert aus der Session ein, wenn verfügbar -->
-                                                    <input type="text" class="form-control" id="validationDefaultUsername" value="<?php echo htmlspecialchars($_SESSION['benutzername'] ?? ''); ?>" aria-describedby="inputGroupPrepend2" readonly>
+                                                    <input type="text" class="form-control" id="validationDefaultUsername" value="<?php echo htmlspecialchars($userData['benutzername'] ?? ''); ?>" aria-describedby="inputGroupPrepend2" readonly>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <label for="validationDefault03" class="form-label"><?= $lang['straße'] ?></label>
-                                                <input type="text" class="form-control" id="validationDefault03" name="strasse" required>
+                                                <input type="text" class="form-control" id="validationDefault03" value="<?php echo htmlspecialchars($userData['adresse'] ?? ''); ?>"name="strasse" required>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="validationDefault04" class="form-label"><?= $lang['stadt'] ?></label>
-                                                <input type="text" class="form-control" id="validationDefault03" name="stadt" required>
+                                                <input type="text" class="form-control" id="validationDefault04" value="<?php echo htmlspecialchars($userData['stadt'] ?? ''); ?>" name="stadt" required>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="validationDefault05" class="form-label"><?= $lang['plz'] ?></label>
-                                                <input type="text" class="form-control" id="validationDefault05" name="plz" required>
+                                                <input type="text" class="form-control" id="validationDefault05" value="<?php echo htmlspecialchars($userData['plz'] ?? ''); ?>" name="plz" required>
                                             </div>
                                             <div class="col-12">
                                             <div class="form-check">

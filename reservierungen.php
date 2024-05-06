@@ -60,8 +60,9 @@
                             </ul>
                         </li>
                     </li>
+                    
                     <li class="nav-item">
-                        <a class="nav-link" href="mailto:serxhio.zani@berater.ifm">Kontakt</a>
+                        <a class="nav-link" href="kontakt.php">Kontakt</a>
                     </li>
                 </ul>
 
@@ -98,9 +99,17 @@ if (!isset($_SESSION['benutzername'])) {
     }
 
     $sql = "SELECT 
+                r.reservierungsid,
                 r.termin,
+                r.strasse,
+                r.stadt,
+                r.plz,
+                r.traeger_vorname,
+                r.traeger_nachname,
+                r.bezahlt,
                 CONCAT(s.modul, ' ', s.schwierigkeitsgrad) AS modul_schwierigkeit,
                 s.schulungsart,
+                s.sprache,
                 nd.vorname, 
                 nd.name,
                 nd.benutzername
@@ -120,24 +129,52 @@ if (!isset($_SESSION['benutzername'])) {
 
         if ($result->num_rows > 0) {
             echo "<table class='table'>";
-            echo "<thead><tr><th>Termin</th><th>Modul</th><th>Schulungsart</th><th>Vorname</th><th>Nachname</th><th>Benutzername</th></tr></thead>";
+            echo "<thead><tr><th>ReservierungsID</th><th>Termin</th><th>Modul</th><th>Schulungsart</th><th>Sprache</th><th>Vorname</th><th>Nachname</th><th>Benutzername</th><th>Rechnung</th></tr></thead>";
             echo "<tbody>";
             while ($row = $result->fetch_assoc()) {
+
+                $bezahltString = $row['bezahlt'] ? "Bezahlt" : "Nicht Bezahlt";
+                $bezahltClass = $row['bezahlt'] ? "text-success" : "text-danger";
                 echo "<tr>
+                        <td>" . htmlspecialchars($row['reservierungsid']) . "</td>
                         <td>" . htmlspecialchars($row['termin']) . "</td>
                         <td>" . htmlspecialchars($row['modul_schwierigkeit']) . "</td>
                         <td>" . htmlspecialchars($row['schulungsart']) . "</td>
+                        <td>" . htmlspecialchars($row['sprache']) . "</td>
                         <td>" . htmlspecialchars($row['vorname']) . "</td>
                         <td>" . htmlspecialchars($row['name']) . "</td>
                         <td>" . htmlspecialchars($row['benutzername']) . "</td>
+                        <td class='$bezahltClass'>" . htmlspecialchars($bezahltString) . "</td>
                         <td> 
                         <form class='delete-form' method='POST' action='stornieren.php'>
-                        <input type='hidden' name='termin' value='" . $row['termin'] . "'>
-                        <input type='hidden' name='benutzername' value='" . $row['benutzername'] . "'>
+                        <input type='hidden' name='reservierungsid' value='" . $row['reservierungsid'] . "'>
                         <button type='button' onclick='confirmDelete(this.form)' class='btn btn-danger'>Reservierung stornieren</button>
                     </form>
+                    <button type='button' class='btn btn-info btn-sm' data-bs-toggle='modal' data-bs-target='#rechnungstraegerModal" . $row['reservierungsid'] . "'>
+                    <i class='fas fa-info-circle'></i> Rechnungsträger
+                </button>
                         </td>
                       </tr>";
+                      echo "<div class='modal fade' id='rechnungstraegerModal" . $row['reservierungsid'] . "' tabindex='-1' aria-labelledby='rechnungstraegerModalLabel" . $row['reservierungsid'] . "' aria-hidden='true'>
+                                <div class='modal-dialog modal-dialog-centered'>
+                                    <div class='modal-content'>
+                                        <div class='modal-header'>
+                                            <h5 class='modal-title' id='rechnungstraegerModalLabel" . $row['reservierungsid'] . "'>Rechnungsträger Informationen</h5>
+                                            <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                                        </div>
+                                        <div class='modal-body'>
+                                            <p><strong>Vorname:</strong> " . htmlspecialchars($row['traeger_vorname']) . "</p>
+                                            <p><strong>Nachname:</strong> " . htmlspecialchars($row['traeger_nachname']) . "</p>
+                                            <p><strong>Straße:</strong> " . htmlspecialchars($row['strasse']) . "</p>
+                                            <p><strong>Stadt:</strong> " . htmlspecialchars($row['stadt']) . "</p>
+                                            <p><strong>PLZ:</strong> " . htmlspecialchars($row['plz']) . "</p>
+                                        </div>
+                                        <div class='modal-footer'>
+                                            <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Schließen</button>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>";
             }
             echo "</tbody></table>";
         } else {
@@ -150,12 +187,17 @@ if (!isset($_SESSION['benutzername'])) {
     $conn->close();
 }
 ?>
+<div>
+    <p>Nach Erhalt der Rechnung haben Sie 14 Tage Zeit, die Rechnung abzugleichen. Andernfalls wird die Reservierung gelöscht.</p>
+    <p>Wenn die Rechnung bezahlt wurde, erhalten Sie 48 Stunden vor Kursbeginn Zugangsdaten für das SAP-System.</p>
+</div>
+
 
 
 
     </div>
 
-    <nav class="navbar bg-body-tertiary ">
+    <nav class="navbar fixed-bottom bg-body-tertiary ">
 
         <nav class="nav flex-column ">
             <a class="nav-link " href="agb.html ">AGB</a>

@@ -6,6 +6,17 @@ if (!isset($_SESSION['benutzername'])) {
     header("Location: newindex.php");
     exit;
 }
+
+if (!isset($_SESSION['lang'])) {
+    $_SESSION['lang'] = 'de'; // Standardmäßig Deutsch
+}
+if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'de'])) {
+    $_SESSION['lang'] = $_GET['lang']; // Sprache ändern, wenn über GET-Parameter angefordert
+}
+
+// Sprachdateien basierend auf der gewählten Sprache laden
+$lang = require 'languages/' . $_SESSION['lang'] . '.php';
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -41,7 +52,7 @@ if (!isset($_SESSION['benutzername'])) {
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <nav class="navbar bg-body-tertiary">
                 <div class="container-fluid">
@@ -55,22 +66,22 @@ if (!isset($_SESSION['benutzername'])) {
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="mainseite.php">Hauptseite</a>
+                        <a class="nav-link active" aria-current="page" href="mainseite.php"><?= $lang['mainseite'] ?></a>
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Schulungen
+                            <?= $lang['training'] ?>
                 </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="opeinst.php">Operations für Einsteiger*innen</a></li>
-                                <li><a class="dropdown-item" href="opefort.php">Operations für Fortgeschrittene</a></li>
-                                <li><a class="dropdown-item" href="coeinst.php">Controlling für Einsteiger*innen</a></li>
-                                <li><a class="dropdown-item" href="cofortg.php">Controlling für Fortgeschrittene</a></li>
+                                <li><a class="dropdown-item" href="opeinst.php"><?= $lang['operations_einst'] ?></a></li>
+                                <li><a class="dropdown-item" href="opefort.php"><?= $lang['operations_fort'] ?></a></li>
+                                <li><a class="dropdown-item" href="coeinst.php"><?= $lang['controlling_einst'] ?></a></li>
+                                <li><a class="dropdown-item" href="cofortg.php"><?= $lang['controlling_fort'] ?></a></li>
                             </ul>
                         </li>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mailto:serxhio.zani@berater.ifm">Kontakt</a>
+                        <a class="nav-link" href="kontakt.php"><?= $lang['contact'] ?></a>
                     </li>
                 </ul>
 
@@ -78,15 +89,18 @@ if (!isset($_SESSION['benutzername'])) {
             <div class="d-flex" style="width: 11%">
                 <div class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownProfileLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="images/profil.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top"> Profil
+                        <img src="images/profil.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top"> <?= $lang['profile'] ?>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownProfileLink">
-                        <li><a class="dropdown-item" href="profilanzeigen.php">Profil bearbeiten</a></li>
-                        <li><a class="dropdown-item" href="logout.php">Abmelden</a></li>
+                        <li><a class="dropdown-item" href="profilanzeigen.php"><?= $lang['show_profile'] ?></a></li>
+                        <li><a class="dropdown-item" href="logout.php"><?= $lang['logout'] ?></a></li>
                     </ul>
                 </div>
             </div>
-
+            <div class="d-flex" style="width: 11%">
+                <a href="?lang=de" class="btn btn-link">DE</a>
+                <a href="?lang=en" class="btn btn-link">EN</a>
+            </div>
         </div>
     </nav>
 
@@ -121,23 +135,25 @@ if (!isset($_SESSION['benutzername'])) {
             </div>
         </div>
     </div>
-    <nav class="navbar bg-body-tertiary ">
+    <footer class="navbar bg-body-tertiary fixed-bottom">
+        <nav class="navbar fixed-bottom bg-body-tertiary ">
 
-        <nav class="nav flex-column ">
-            <a class="nav-link " href="agb.html ">AGB</a>
-            <a class="nav-link " href="impressum.html ">Impressum</a>
-            <a class="nav-link " href="datenschutz.html ">Datenschutz</a>
+            <nav class="nav flex-column ">
+                <a class="nav-link " href="agb.html ">AGB</a>
+                <a class="nav-link " href="impressum.html ">Impressum</a>
+                <a class="nav-link " href="datenschutz.html ">Datenschutz</a>
+            </nav>
+            <div class="footer-social ">
+                <div class="footer-copyright ">© ifm electronic gmbh 2024</div>
+            </div>
+            <div class="footer-subsidiary" style="padding: 1%">
+                <p><strong>ifm business solutions</strong><br /> Martinshardt 19<br /> 57074&nbsp;Siegen
+                </p>
+                <p><strong>Hotline 0800 / 16 16 16 4</strong><br />
+                    <strong>E-Mail&nbsp;</strong><a href="mailto:info@ifm.com ">info@ifm.com</a></p>
+            </div>
         </nav>
-        <div class="footer-social ">
-            <div class="footer-copyright ">© ifm electronic gmbh 2024</div>
-        </div>
-        <div class="footer-subsidiary" style="padding: 1%">
-            <p><strong>ifm business solutions</strong><br /> Martinshardt 19<br /> 57074&nbsp;Siegen
-            </p>
-            <p><strong>Hotline 0800 / 16 16 16 4</strong><br />
-                <strong>E-Mail&nbsp;</strong><a href="mailto:info@ifm.com ">info@ifm.com</a></p>
-        </div>
-    </nav>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js " integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz " crossorigin="anonymous "></script>
 </body>
 

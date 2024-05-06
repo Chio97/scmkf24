@@ -54,15 +54,21 @@ if ($result->num_rows > 0) {
 
 $conn->close();
 ?>
-
-
-<body>
 <?php if (isset($_SESSION['notification'])): ?>
-<div class="alert alert-success" role="alert">
+<div class="alert alert-success" role="alert" id="notification">
     <?php echo $_SESSION['notification']; ?>
     <?php unset($_SESSION['notification']); ?> <!-- Benachrichtigung aus der Session entfernen -->
 </div>
+<script>
+    setTimeout(function() {
+        document.getElementById('notification').style.display = 'none';
+    }, 5000); // Die Benachrichtigung verschwindet nach 5000 Millisekunden
+</script>
 <?php endif; ?>
+
+
+
+<body>
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
@@ -91,7 +97,7 @@ $conn->close();
                         </li>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="mailto:serxhio.zani@berater.ifm">Kontakt</a>
+                    <a class="nav-link" href="kontakt.php">Kontakt</a>
                     </li>
                 </ul>
 
@@ -139,8 +145,9 @@ $conn->close();
                 <label for="validationDefault05" class="form-label">Berufsbezeichnung</label>
                 <input type="text" class="form-control" id="beruf" name="beruf" value="<?php echo htmlspecialchars($beruf);?>">
             </div>
+            <h5> Rechnungsanschrifft </h5>
             <div class="col-md-4">
-                <label for="validationDefault06" class="form-label">Anschrifft</label>
+                <label for="validationDefault06" class="form-label">Strasse und Hausnummer</label>
                 <input type="text" class="form-control" id="adresse" name="adresse" value="<?php echo htmlspecialchars($adresse);?>"> 
             </div>
             <div class="col-md-4">
@@ -151,11 +158,13 @@ $conn->close();
                 <label for="validationDefault08" class="form-label">Stadt</label>
                 <input type="text" class="form-control" id="stadt" name="stadt" value="<?php echo htmlspecialchars($stadt);?>">
             </div>
-            <div class="col-12 mb-3">
-                <button class="btn btn-primary" type="submit" name="action" value="save">Daten speichern</button>
-            </div>
-            <div class="col-12 mb-3">
-                <button class="btn btn-danger" type="submit" name="action" value="delete" onclick="return confirmDelete();">Profil löschen</button>
+            <div class="row mt-3">
+                <div class="col-md-2 mb-3">
+                    <button class="btn btn-primary" type="submit" name="action" value="save">Daten speichern</button>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <button class="btn btn-danger" type="submit" name="action" value="delete" onclick="return confirmDelete();">Profil löschen</button>
+                </div>
             </div>
 
             
@@ -194,7 +203,7 @@ function confirmDelete() {
     <div style="min-height: 22vh;">
         <br>
     </div>
-    <nav class="navbar bg-body-tertiary">
+    <nav class="navbar fixed-bottom bg-body-tertiary">
 
         <nav class="nav flex-column">
             <a class="nav-link" href="agb.html">AGB</a>

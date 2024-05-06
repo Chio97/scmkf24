@@ -2,13 +2,12 @@
 session_start();
 include 'db.php';
 
-if (isset($_POST['benutzername'], $_POST['termin'])) {
-    $benutzername = $_POST['benutzername'];
-    $termin = $_POST['termin'];
+if (isset($_POST['reservierungsid'])) {
+    $reservierungsid = $_POST['reservierungsid'];
 
-    $sql = "DELETE FROM reservierung WHERE benutzername = ? AND termin = ?";
+    $sql = "DELETE FROM reservierung WHERE reservierungsid = ?";
     if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("ss", $benutzername, $termin);
+        $stmt->bind_param("i", $reservierungsid); // Hier gehe ich davon aus, dass die Reservierungs-ID eine Ganzzahl ist (integer).
         if ($stmt->execute()) {
             $_SESSION['notification'] = "Reservierung erfolgreich storniert.";
         } else {

@@ -1,8 +1,14 @@
 <?php
 session_start();
-include 'db.php'; // Stellen Sie sicher, dass Sie Ihre Datenbankverbindungsdatei richtig einbinden
+include 'db.php';
 
-$message = ""; // Initialisieren einer leeren Nachrichtenvariable
+if (!isset($_SESSION['benutzername'])) {
+    // Keine Session vorhanden, also Umleitung zur Login-Seite
+    header("Location: newindex.php");
+    exit;
+}
+
+$message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['old_password'], $_POST['new_password'], $_POST['confirm_password'])) {
     $old_password = $_POST['old_password'];
@@ -18,9 +24,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['old_password'], $_POST
         $stmt->bind_result($db_password);
         $stmt->fetch();
 
-        if ($old_password == $db_password && $new_password === $confirm_password) {
+        // Überprüfen, ob das eingegebene alte Passwort mit dem in der Datenbank gespeicherten Passwort übereinstimmt
+        if (password_verify($old_password, $db_password) && $new_password === $confirm_password) {
+            // Neues Passwort hashen
+            $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+
             $update_stmt = $conn->prepare("UPDATE nutzerdaten SET passwort = ? WHERE benutzername = ?");
-            $update_stmt->bind_param("ss", $new_password, $_SESSION['benutzername']);
+            $update_stmt->bind_param("ss", $new_password_hash, $_SESSION['benutzername']);
             if ($update_stmt->execute()) {
                 $message = "Passwort erfolgreich geändert!";
             } else {
@@ -43,6 +53,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['old_password'], $_POST
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -73,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['old_password'], $_POST
                         </li>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="mailto:serxhio.zani@berater.ifm">Kontakt</a>
+                    <a class="nav-link" href="kontakt.php">Kontakt</a>
                     </li>
                 </ul>
 
@@ -93,28 +105,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['old_password'], $_POST
     </nav>
 
     <div class="container mt-5">
-        <h2>Passwort ändern</h2>
-        <?php if (!empty($message)): ?>
-            <div id="alert-box" class="alert <?php echo strpos($message, 'erfolgreich') !== false ? 'alert-success' : 'alert-danger'; ?>" role="alert" >
-                <?php echo $message; ?>
-            </div>
-        <?php endif; ?>
-        <form action="passwort.php" method="post" class="mt-4">
-            <div class="mb-3">
-                <label for="old_password" class="form-label">Altes Passwort:</label>
-                <input type="password" class="form-control" id="old_password" name="old_password" required>
-            </div>
-            <div class="mb-3">
-                <label for="new_password" class="form-label">Neues Passwort:</label>
-                <input type="password" class="form-control" id="new_password" name="new_password" required>
-            </div>
-            <div class="mb-3">
-                <label for="confirm_password" class="form-label">Passwort bestätigen:</label>
-                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Passwort ändern</button>
-        </form>
-    </div>
+    <h2>Passwort ändern</h2>
+    <?php if (!empty($message)): ?>
+        <div id="alert-box" class="alert <?php echo strpos($message, 'erfolgreich') !== false ? 'alert-success' : 'alert-danger'; ?>" role="alert" >
+            <?php echo $message; ?>
+        </div>
+        <script>
+            setTimeout(function() {
+                document.getElementById('alert-box').style.display = 'none';
+            }, 5000);
+        </script>
+    <?php endif; ?>
+    <form action="passwort.php" method="post" class="mt-4">
+        <div class="mb-3 position-relative">
+            <label for="old_password" class="form-label">Altes Passwort:</label>
+            <input type="password" class="form-control" id="old_password" name="old_password" required>
+            <span class="position-absolute top-50 end-0 translate-middle-y me-3 toggle-password" style="cursor: pointer; margin-top: 1rem;" onclick="togglePassword('old_password')">
+                <i class="fa fa-eye" id="toggleOldPassword"></i>
+            </span>
+        </div>
+        <div class="mb-3 position-relative">
+            <label for="new_password" class="form-label">Neues Passwort:</label>
+            <input type="password" class="form-control" id="new_password" name="new_password" required>
+            <span class="position-absolute top-50 end-0 translate-middle-y me-3 toggle-password" style="cursor: pointer; margin-top: 1rem;" onclick="togglePassword('new_password')">
+                <i class="fa fa-eye" id="toggleNewPassword"></i>
+            </span>
+        </div>
+        <div class="mb-3 position-relative">
+            <label for="confirm_password" class="form-label">Passwort bestätigen:</label>
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+            <span class="position-absolute top-50 end-0 translate-middle-y me-3 toggle-password" style="cursor: pointer; margin-top: 1rem;" onclick="togglePassword('confirm_password')">
+                <i class="fa fa-eye" id="toggleConfirmPassword"></i>
+            </span>
+        </div>
+        <button type="submit" class="btn btn-primary">Passwort ändern</button>
+    </form>
+</div>
+<script>
+function togglePassword(field_id) {
+    var input = document.getElementById(field_id);
+    var eyeIcon = document.getElementById('toggle' + field_id.charAt(0).toUpperCase() + field_id.slice(1));
+    if (input.type === "password") {
+        input.type = "text";
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+    } else {
+        input.type = "password";
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+    }
+}
+</script>
+
 
 
 

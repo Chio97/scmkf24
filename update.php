@@ -25,7 +25,7 @@ if (isset($_POST['action'])) {
         if ($stmt->affected_rows > 0) {
             $_SESSION['notification'] = "Daten erfolgreich geändert.";
         } else {
-            $_SESSION['notification'] = "Keine Änderung vorgenommen. Fehler: " . $stmt->error;
+            $_SESSION['notification'] = "Keine Änderung vorgenommen. " . $stmt->error;
         }
         $stmt->close();
         header("Location: profil.php");

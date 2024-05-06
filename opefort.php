@@ -12,15 +12,20 @@
 session_start();
 include 'db.php'; // Stellen Sie sicher, dass Sie Ihre Datenbankverbindungsdatei richtig einbinden
 // Beispiel nach der Buchungslogik in buche_schulung.php
+if (!isset($_SESSION['lang'])) {
+    $_SESSION['lang'] = 'de'; // Standardmäßig Deutsch
+}
+if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'de'])) {
+    $_SESSION['lang'] = $_GET['lang']; // Sprache ändern, wenn über GET-Parameter angefordert
+}
+$lang = require 'languages/' . $_SESSION['lang'] . '.php';
 
 // Überprüfung, ob der Benutzername gesetzt ist, entweder über POST (bei einem Formularsubmit) oder über SESSION (wenn bereits gespeichert)
 if (isset($_POST['benutzername'])) {
     $benutzername = $_POST['benutzername'];
     $_SESSION['benutzername'] = $benutzername;
-    echo "<h3>Hi $vorname, $benutzername Willkommen bei der SCM Knowledge Factory!</h3>"; // Speichern in der Session für späteren Gebrauch
 } elseif (isset($_SESSION['benutzername'])) {
     $benutzername = $_SESSION['benutzername'];
-    echo "<h3>Hi , $benutzername Willkommen bei der SCM Knowledge Factory!</h3>";
 } else {
     die("Benutzername nicht gesetzt. Bitte stellen Sie sicher, dass Sie angemeldet sind.");
 }
@@ -36,6 +41,8 @@ $stmt = $conn->prepare("SELECT vorname, name, benutzername, email, unternehmen, 
 $stmt->bind_param("s", $benutzername);
 $stmt->execute();
 $result = $stmt->get_result();
+
+$userData = $result->fetch_assoc();
 
 // Abfragen für verfügbare Sprachen und Termine
 $sprachenQuery = "SELECT DISTINCT sprache FROM schulungen WHERE sprache IS NOT NULL";
@@ -88,7 +95,7 @@ if (isset($_SESSION['notification'])) {
                         </li>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mailto:serxhio.zani@berater.ifm"><?= $lang['contact'] ?></a>
+                        <a class="nav-link" href="kontakt.php"><?= $lang['contact'] ?></a>
                     </li>
                 </ul>
 
@@ -142,7 +149,7 @@ if (isset($_SESSION['notification'])) {
                             <div class="modal-dialog text-dark">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel"><?= $lang['buche_op_f'] ?></h1>
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel"><?= $lang['buchen_op_f'] ?></h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -186,11 +193,11 @@ if (isset($_SESSION['notification'])) {
                                             <h5><?= $lang['rechnungsadresse'] ?></h5>
                                             <div class="col-md-4">
                                                 <label for="validationDefault01" class="form-label"><?= $lang['vorname'] ?></label>
-                                                <input type="text" class="form-control" id="validationDefault01" name="vorname" required>
+                                                <input type="text" class="form-control" id="validationDefault01" value="<?php echo htmlspecialchars($userData['vorname'] ?? ''); ?>" name="traeger_vorname" required>
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="validationDefault02" class="form-label"><?= $lang['nachname'] ?></label>
-                                                <input type="text" class="form-control" id="validationDefault02" name="nachname"required>
+                                                <input type="text" class="form-control" id="validationDefault02" value="<?php echo htmlspecialchars($userData['name'] ?? ''); ?>" name="traeger_nachname"required>
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="validationDefaultUsername" class="form-label"><?= $lang['username'] ?></label>
@@ -203,15 +210,15 @@ if (isset($_SESSION['notification'])) {
 
                                             <div class="col-md-6">
                                                 <label for="validationDefault03" class="form-label"><?= $lang['straße'] ?></label>
-                                                <input type="text" class="form-control" id="validationDefault03" name="strasse" required>
+                                                <input type="text" class="form-control" id="validationDefault03" value="<?php echo htmlspecialchars($userData['adresse'] ?? ''); ?>"name="strasse" required>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="validationDefault04" class="form-label"><?= $lang['stadt'] ?></label>
-                                                <input type="text" class="form-control" id="validationDefault03" name="stadt" required>
+                                                <input type="text" class="form-control" id="validationDefault04"  value="<?php echo htmlspecialchars($userData['stadt'] ?? ''); ?>" name="stadt" required>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="validationDefault05" class="form-label"><?= $lang['plz'] ?></label>
-                                                <input type="text" class="form-control" id="validationDefault05" name="plz" required>
+                                                <input type="text" class="form-control" id="validationDefault05" value="<?php echo htmlspecialchars($userData['plz'] ?? ''); ?>" name="plz" required>
                                             </div>
                                             <div class="col-12">
                                             <div class="form-check">
@@ -241,52 +248,46 @@ if (isset($_SESSION['notification'])) {
         </div>
     </div>
     <div class="container-fluid">
-        <p class="fs-2"><strong>Cockpitgesteuerte Disposition mit GIB Operations</strong></p>
+        <p class="fs-2"><strong><?= $lang['textblock1_ü'] ?></strong></p>
         <blockquote class="blockquote">
-            <p>Was ist unter cockpitgesteuerter Disposition zu verstehen? Wir zeigen Ihnen Ziele, Maßnahmen und Vorteile anhand einprägsamer Praxisbeispiele. Sie lernen, wie Sie individuelle Parameter und Alerts implementieren und Selektionseinstellungen
-                und Layouts auf Ihre persönlichen Bedürfnisse anpassen. Mithilfe des GIB Suite Operations und des Alertmonitors werden Sie kritische Situationen frühzeitig erkennen und rechtzeitig Gegenmaßnahmen einleiten können (Fehlteilsituation bei
-                Fertigungsaufträgen). Durch die gezielte Nutzung der angebotenen Dashboards werden Sie zukünftig in der Lage sein, sich mehr Transparenz und Übersichtlichkeit zu verschaffen. Je nach Bedarf bringen Sie gezielt Informationen über Lagerorte
-                und Werke zur Anzeige, je nach Wunsch ein- oder mehrzeilig, in Menge oder Wert. Eine Unterweisung in die Nutzung unterstützender Dispoparameter aus dem Formelwerk rundet diesen Workshop ab.
-            </p>
+            <p><?= $lang['textblock1_t'] ?></p>
         </blockquote>
     </div>
     <div class="container-fluid">
-        <p class="fs-2"><strong>Ihr Nutzen</strong></p>
+        <p class="fs-2"><strong><?= $lang['ihr_nutzen'] ?></strong></p>
         <blockquote class="blockquote">
-            <p>Zukünftig nutzen Sie den erweiterten Funktionsumfang des Moduls optimal für Ihre betrieblichen Anforderungen. Sie werden Sicherheits- und Meldebestände automatisch berechnen können und den Materialstamm in SAP problemlos abgleichen.
-            </p>
+            <p><?= $lang['ihrnutzen_t_o_f'] ?></p>
         </blockquote>
     </div>
     <div class="container-fluid">
-        <p class="fs-2"><strong>Was erwartet Sie in diesem Workshop?</strong></p>
+        <p class="fs-2"><strong><?= $lang['erwartung'] ?></strong></p>
     </div>
     <blockquote class="blockquote">
         <ul class="list-unstyled">
             <ul>
-                <li>Administration</li>
-                <li>Erweiterte Funktionsübersicht</li>
-                <li>Integration der Module DCO und DCC</li>
+                <li><?= $lang['erwartung_o_f1'] ?></li>
+                <li><?= $lang['erwartung_o_f2'] ?></li>
+                <li><?= $lang['erwartung_o_f3'] ?></li>
             </ul>
         </ul>
     </blockquote>
     <div class="container-fluid">
-        <p class="fs-2"><strong>An wen richtet sich der Workshop?</strong></p>
+        <p class="fs-2"><strong><?= $lang['an_wen'] ?></strong></p>
     </div>
     <blockquote class="blockquote">
         <ul class="list-unstyled">
             <ul>
-                <li>Sie sind mit den Grundfunktionen im GIB Suite Controlling und Operations vertraut sind und möchten Ihr Wissen vertiefen sowie angrenzende Funktionen nutzen möchten.</li>
-                <li>Sie sehen die Sicherheits- und Meldebestände als kritisch an und suchen nach Möglichkeiten einer automatischen Parameterpflege.</li>
-                <li>Als Produktverantwortlicher sind Sie neugierig auf die Administration der Anwendungen.</li>
-                <li>Sie arbeiten bereits täglich mit dem Modul.</li>
-            </ul>
+                <li><?= $lang['an_wen_o_f1'] ?></li>
+                <li><?= $lang['an_wen_o_f2'] ?></li>
+                <li><?= $lang['an_wen_o_f3'] ?></li>
+                <li><?= $lang['an_wen_o_f4'] ?></li>
+               </ul>
         </ul>
     </blockquote>
     <div class="container-fluid">
-        <p class="fs-2"><strong>Exklusives-Training online oder Offline </strong></p>
+        <p class="fs-2"><strong><?= $lang['exclusive'] ?></strong></p>
         <blockquote class="blockquote">
-            <p>Sie möchten diese Schulung exklusiv für Ihr Unternehmen buchen? Für weitere Details wie Preis und Termine eine E-Mail an <a href="mailto:serxhio.zani@berater.ifm">serxhio.zani@berater.ifm</a> mit dem Betreff "Exklusives-Training" senden. Sie
-                werden eine Antwort in kurzer Zeit bekommen.
+            <p><li><?= $lang['exclusive_t1'] ?></li> <a href="mailto:serxhio.zani@berater.ifm">serxhio.zani@berater.ifm</a> <li><?= $lang['exclusive_t2'] ?></li>
             </p>
         </blockquote>
     </div>
@@ -294,9 +295,9 @@ if (isset($_SESSION['notification'])) {
     <nav class="navbar bottom bg-body-tertiary">
 
         <nav class="nav flex-column">
-            <a class="nav-link" href="agb.html">AGB</a>
+            <a class="nav-link" href="agb.html"><li><?= $lang['agb'] ?></li></a>
             <a class="nav-link" href="impressum.html">Impressum</a>
-            <a class="nav-link" href="datenschutz.html">Datenschutz</a>
+            <a class="nav-link" href="datenschutz.html"><li><?= $lang['datenschutz'] ?></li></a>
         </nav>
         <div class="footer-social">
             <div class="footer-copyright">© ifm electronic gmbh 2024</div>

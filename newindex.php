@@ -52,11 +52,14 @@ $lang = require 'languages/' . $_SESSION['lang'] . '.php';
                 <a href="?lang=de">DE</a> | <a href="?lang=en">EN</a>
             </div>
             <h3><?= $lang['welcome'] ?></h3> <!-- Beispiel für die Nutzung eines übersetzten Textes -->
-            <?php if(isset($_SESSION['error'])): ?>
-                <div class="error">
-                    <?= $lang[$_SESSION['error']]; unset($_SESSION['error']); ?>
-                </div>
-            <?php endif; ?>
+            <?php if(isset($_SESSION['error']) && isset($lang[$_SESSION['error']])): ?>
+    <div class="error">
+        <?= $lang[$_SESSION['error']]; unset($_SESSION['error']); ?>
+    </div>
+<?php else: ?>
+    <div class="error" style="display: none;"></div>
+<?php endif; ?>
+
             <div class="mb-3">
                 <label for="benutzername" class="form-label"><?= $lang['username'] ?></label> <!-- Beispiel für die Nutzung eines übersetzten Textes -->
                 <input type="text" class="form-control" id="benutzername" name="benutzername" required>
@@ -66,6 +69,9 @@ $lang = require 'languages/' . $_SESSION['lang'] . '.php';
                 <input type="password" class="form-control" id="passwort" name="passwort" required>
             </div>
             <button type="submit" class="btn btn-primary"><?= $lang['login'] ?></button> <!-- Beispiel für die Nutzung eines übersetzten Textes -->
+            <div class="mb-3 text-center">
+                <a href="passwort_zurueck.php">Passwort vergessen?<!-- Link für Passwort vergessen -->
+            </div>
             <div class="mt-3 text-center">
                 <a href="register.html"><?= $lang['no_account'] ?></a>
             </div>

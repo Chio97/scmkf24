@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_result = $stmt->get_result();
         if ($stmt_result->num_rows > 0) {
             $data = $stmt_result->fetch_assoc();
-            if ($data['passwort'] === $passwort) {
+            if (password_verify($passwort, $data['passwort'])) {
                 $_SESSION['vorname'] = $data['vorname'];
                 $_SESSION['benutzername'] = $data['benutzername']; // Speichern des Vornamens in der Session
                 header("Location: mainseite.php"); // Umleitung zur Hauptseite

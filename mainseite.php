@@ -21,12 +21,10 @@
     // Sprachdateien basierend auf der gewählten Sprache laden
     $lang = require 'languages/' . $_SESSION['lang'] . '.php';
 
-    if(isset($_SESSION['vorname'])) { // Prüfen, ob der Vorname gesetzt ist
-        $vorname = $_SESSION['vorname'];
-        $benutzername = $_SESSION['benutzername']; // Zugriff auf den Vornamen aus der Session
-        echo "<h3>Hi $vorname, Willkommen bei der SCM Knowledge Factory!</h3>";
-    } else {
-        echo "<h3>Hi, Willkommen bei der SCM Knowledge Factory!</h3>"; // Fallback, falls keine Session existiert
+    if (!isset($_SESSION['benutzername'])) {
+        // Keine Session vorhanden, also Umleitung zur Login-Seite
+        header("Location: newindex.php");
+        exit;
     }
 
     ?>
@@ -60,7 +58,7 @@
                         </li>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="mailto:serxhio.zani@berater.ifm"><?= $lang['contact'] ?></a>
+                        <a class="nav-link" href="kontakt.php"><?= $lang['contact'] ?></a>
                     </li>
                 </ul>
 
@@ -82,12 +80,10 @@
             </div>
         </div>
     </nav>
-    <div style="margin-top: 5px;">
-
-    </div>
-
-
-    <div class="row" style="width: 100%; padding: 2%;">
+<div style="margin-top: 1%; text-align: center;">
+    <h3>Hi <?php echo htmlspecialchars($_SESSION['vorname'] ?? ''); ?> , Willkommen bei der SCM-Knowledge Factory </h3>
+</div>
+    <div class="row" style="width: 100%; padding: 1%;">
         <div class="col-sm-6 mb-3 mb-sm-0">
             <div class="card">
                 <img src="images/operations.svg" class="card-img-top" alt="..." style="width:auto; height:400px;">
@@ -111,23 +107,25 @@
             </div>
         </div>
     </div>
-    <nav class="navbar bg-body-tertiary">
 
-        <nav class="nav flex-column">
-            <a class="nav-link" href="agb.html"><?= $lang['agb'] ?></a>
-            <a class="nav-link" href="impressum.html">Impressum</a>
-            <a class="nav-link" href="datenschutz.html"><?= $lang['datenschutz'] ?></a>
-        </nav>
-        <div class="footer-social">
-            <div class="footer-copyright">© ifm electronic gmbh 2024</div>
-        </div>
-        <div class="footer-subsidiary"style="padding: 1%">
-            <p><strong>ifm business solutions</strong><br /> Martinshardt 19<br /> 57074&nbsp;Siegen
-            </p>
-            <p><strong>Hotline 0800 / 16 16 16 4</strong><br />
-                <strong>E-Mail&nbsp;</strong><a href="mailto:info@ifm.com">info@ifm.com</a></p>
-        </div>
+    <footer class="navbar bg-body-tertiary">
+    <nav class="nav flex-column">
+        <a class="nav-link" href="agb.html"><?= $lang['agb'] ?></a>
+        <a class="nav-link" href="impressum.html">Impressum</a>
+        <a class="nav-link" href="datenschutz.html"><?= $lang['datenschutz'] ?></a>
     </nav>
+    <div class="footer-social">
+        <div class="footer-copyright">© ifm electronic gmbh 2024</div>
+    </div>
+    <div class="footer-subsidiary" style="padding: 1%">
+        <p><strong>ifm business solutions</strong><br /> Martinshardt 19<br /> 57074&nbsp;Siegen
+        </p>
+        <p><strong>Hotline 0800 / 16 16 16 4</strong><br />
+            <strong>E-Mail&nbsp;</strong><a href="mailto:info@ifm.com">info@ifm.com</a></p>
+    </div>
+</footer>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js " integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz " crossorigin="anonymous "></script>
 </body>
 
