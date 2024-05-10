@@ -83,10 +83,52 @@ return [
 'an_wen_o_f1' => 'You are familiar with the basic functions in GIB Suite Controlling and Operations and would like to deepen your knowledge and use related functions.',
 'an_wen_o_f2' => 'You consider the safety and message inventories to be critical and are looking for ways to maintain parameters automatically.',
 'an_wen_o_f3' => 'As a product manager, you are curious about the administration of applications',
-'an_wen_o_f4' => 'You already work with the module on a daily basis'
+'an_wen_o_f4' => 'You already work with the module on a daily basis',
+'zielgruppe_t_c' => 'For the areas of scheduling and/or inventory controlling',
+'book_co_e' => 'Book now a Controlling Training course for beginners',
+'book_co_f' => 'Book now an advanced Controlling Training course',
+'textblock1_ce_ü' => 'Manage key figures with GIB Controlling',
+'textblock1_ce_t' => 'Using practical examples, we will show you how to interpret and form key figures, classify materials using ABC and XYZ analyses and how you can benefit from the effective use of the coverage matrix. You will learn how
+navigate safely through plant and material numbers and how to use different aggregation levels for your purposes. Get to know the supporting, dynamic master data maintenance with the help of the formula system and the MRP profiles
+and the MRP profiles.',
+'erwartung1_ce' => 'Data structure and database',
+'erwartung2_ce' => 'Logistic key figures',
+'erwartung3_ce' => 'Setting classification parameters and interpreting their results',
+'erwartung4_ce' => 'Show possibilities for parameter maintenance',
+'textblock1_cf_ü' => 'Sustainable inventory optimization with GIB Controlling',
+'textblock1_cf_t' => 'We will show you, using practical examples, how you can sustainably optimize your inventory with minimal time expenditure. Find out more about handling material groupings, the use of rules and decision trees. Use the advantages of the formulas and the associated possibility of an automated updating of the determined disposition parameters as suggested values. In addition, we will show you the individual use of segmentation characteristics and the replenishment time calculation. Get to know and appreciate the advantages of specific parameterization and the individualization options. ',
+'textblock2_cf_t' => 'You are able to adapt the extended functionality of the module to your operational requirements. You know the technical possibilities and can assess requirements, classify them in the functionality and partially implement them. You can store an automatic calculation of safety and reorder stocks and compare the material master in SAP.',
+'erwartung_cf_1' => 'Administration',
+'erwartung_cf_2' => 'Own classification using the example of the product life cycle',
+'erwartung_cf_3' => 'Grouping and classification',
+'erwartung_cf_4' => 'Calculation of safety and reorder points',
+'erwartung_cf_5' => 'Comparison of data in the SAP material master',
+//kontakt.php
+'kontaktieren_sie' => 'Contact us',
+'ausfüllen_kontakt' => 'Fill out the form to send us a message:',
+'betreff' => 'Subject',
+'email' => 'Email',
+'nachricht' => 'Your Message',
+'nachricht_senden' => 'Send message',
+'kontaktinfo' => 'Contact information',
+'büroadresse' => 'Office address',
+'folgen_sie' => 'Follow us',
+//profilanzeigen.php
+'meine_daten' => 'Profile information',
+'daten_aktualisieren' => 'Manage your data',
+'change_password' => 'Change password',
+'meine_reservierungen' => 'My reservations',
+'reservierungen_verwalten' => 'Manage reservations',
+'profil_bearbeiten' => 'Edit profile information',
+'unternehmen' => 'Company',
+'beruf' => 'Berufsbezeichnung',
+'daten_speichern' => 'Save', 
+'profil_löschen' => 'Delete profile',
+'sind_sie_sicher' => 'Are you sure?',
+'wirklich' => 'Do you really want do delete this profile?',
+'ja_löschen' => 'Yes, delete',
+'nein_abbrechen' => 'No, cancel',
 
-
-    // Weitere Übersetzungen...
 ];
 ?>
 

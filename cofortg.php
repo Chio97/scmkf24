@@ -139,7 +139,7 @@ if (isset($_SESSION['notification'])) {
                         <h5 class="card-title"><?= $lang['veranstaltungsort'] ?></h5>
                         <p class="card-text"><?= $lang['veranstaltungsort_t'] ?></p>
                         <h5 class="card-title"><?= $lang['zielgruppe'] ?></h5>
-                        <p class="card-text">Für die Bereiche Disposition und/oder Bestandscontrolling</p>
+                        <p class="card-text"><?= $lang['zielgruppe_t_c'] ?></p>
                         <h5 class="card-title"><?= $lang['teilnehmergebühr'] ?></h5>
                         <p class="card-text">580 €</p>
                         <!-- Button trigger modal -->
@@ -151,7 +151,7 @@ if (isset($_SESSION['notification'])) {
                             <div class="modal-dialog text-dark">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Buchen Sie jetzt eine Controlling Schulung für Fortgeschrittene</h1>
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel"><?= $lang['buchen_co_f'] ?></h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -192,17 +192,17 @@ if (isset($_SESSION['notification'])) {
                                                     ?>
                                                 </select>
                                             </div>
-                                            <h5>Rechnungsadresse hinzufügen</h5>
+                                            <h5><?= $lang['rechnungsadresse'] ?></h5>
                                             <div class="col-md-4">
-                                                <label for="validationDefault01" class="form-label">Vorname</label>
+                                                <label for="validationDefault01" class="form-label"><?= $lang['vorname'] ?></label>
                                                 <input type="text" class="form-control" id="validationDefault01" value="<?php echo htmlspecialchars($userData['vorname'] ?? ''); ?>" name="traeger_vorname" required>
                                             </div>
                                             <div class="col-md-4">
-                                                <label for="validationDefault02" class="form-label">Nachname</label>
+                                                <label for="validationDefault02" class="form-label"><?= $lang['nachname'] ?></label>
                                                 <input type="text" class="form-control" id="validationDefault02" value="<?php echo htmlspecialchars($userData['name'] ?? ''); ?>" name="traeger_nachname"required>
                                             </div>
                                             <div class="col-md-4">
-                                                <label for="validationDefaultUsername" class="form-label">Benutzername</label>
+                                                <label for="validationDefaultUsername" class="form-label"><?= $lang['username'] ?></label>
                                                 <div class="input-group">
                                                     <span class="input-group-text" id="inputGroupPrepend2">@</span>
                                                     <!-- Fügen Sie den Wert aus der Session ein, wenn verfügbar -->
@@ -211,28 +211,28 @@ if (isset($_SESSION['notification'])) {
                                             </div>
 
                                             <div class="col-md-6">
-                                                <label for="validationDefault03" class="form-label">Straße</label>
+                                                <label for="validationDefault03" class="form-label"><?= $lang['straße'] ?></label>
                                                 <input type="text" class="form-control" id="validationDefault03" value="<?php echo htmlspecialchars($userData['adresse'] ?? ''); ?>" name="strasse" required>
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="validationDefault04" class="form-label">Stadt</label>
+                                                <label for="validationDefault04" class="form-label"><?= $lang['stadt'] ?></label>
                                                 <input type="text" class="form-control" id="validationDefault03" value="<?php echo htmlspecialchars($userData['stadt'] ?? ''); ?>" name="stadt" required>
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="validationDefault05" class="form-label">Postleitzahl</label>
+                                                <label for="validationDefault05" class="form-label"><?= $lang['plz'] ?></label>
                                                 <input type="text" class="form-control" id="validationDefault05"  value="<?php echo htmlspecialchars($userData['plz'] ?? ''); ?>" name="plz" required>
                                             </div>
                                             <div class="col-12">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
                                                 <label class="form-check-label" for="invalidCheck2">
-                                                    Akzeptieren Sie die <a href="pdf/AGB.pdf" target="_blank">Bedingungen und Konditionen</a>
+                                                <?= $lang['akzeptieren'] ?> <a href="pdf/AGB.pdf" target="_blank"><?= $lang['bedingungen'] ?></a>
                                                 </label>
                                             </div>
                                             </div>
                                             <div class="col-12">
-                                                <button class="btn btn-primary" type="submit">Jetzt buchen</button>
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+                                                <button class="btn btn-primary" type="submit"><?= $lang['jetzt_buchen'] ?></button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?= $lang['close'] ?></button>
                                             </div>
                                             <input type="hidden" name="benutzername" value="<?php echo htmlspecialchars($benutzername); ?>">
                                         </form>
@@ -251,53 +251,47 @@ if (isset($_SESSION['notification'])) {
         </div>
     </div>
     <div class="container-fluid">
-        <p class="fs-2"><strong>Nachhaltige Bestandsoptimierung mit GIB Controlling</strong></p>
+        <p class="fs-2"><strong><?= $lang['textblock1_cf_ü'] ?></strong></p>
         <blockquote class="blockquote">
-            <p>Wir zeigen Ihnen an praxisnahen Beispielen, wie Sie mit minimalem Zeitaufwand Ihre Bestände nachhaltig optimieren. Erfahren Sie mehr über die Handhabung von Materialgruppierungen, dem Einsatz von Regelwerken und Entscheidungsbäumen. Nutzen
-                Sie die Vorteile des Formelwerks und die damit verbundene Möglichkeit einer automatisierten Fortschreibung der ermittelten Dispo-Parameter als Vorschlagswerte. Darüber hinaus zeigen wir Ihnen die individuelle Nutzung von Segmentierungsmerkmalen
-                und der Wiederbeschaffungszeiten-Kalkulation. Lernen Sie die Vorzüge der spezifischen Parametrisierung und der Individualisierungsmöglichkeiten kennen und schätzen.
-            </p>
+            <p><?= $lang['textblock1_cf_t'] ?></p>
         </blockquote>
     </div>
     <div class="container-fluid">
-        <p class="fs-2"><strong>Ihr Nutzen</strong></p>
+        <p class="fs-2"><strong><?= $lang['textblock1_ce_ü'] ?></strong></p>
         <blockquote class="blockquote">
-            <p>Sie sind in der Lage, den erweiterten Funktionsumfang des Moduls auf Ihre betrieblichen Anforderungen zu adaptieren. Sie kennen die technischen Möglichkeiten und können Anforderungen beurteilen, in den Funktionsumfang einordnen und teilweise
-                umsetzen. Sie können eine automatische Berechnung von Sicherheits- und Meldebeständen hinterlegen und den Materialstamm in SAP abgleichen.</p>
-        </blockquote>
+            <p><?= $lang['textblock2_cf_t'] ?></blockquote>
     </div>
     <div class="container-fluid">
-        <p class="fs-2"><strong>Was erwartet Sie in diesem Workshop?</strong></p>
+        <p class="fs-2"><strong><?= $lang['erwartung'] ?></strong></p>
     </div>
     <blockquote class="blockquote">
         <ul class="list-unstyled">
             <ul>
-                <li>Administration</li>
-                <li>Eigene Klassifizierung am Beispiel des Produktlebenszyklus</li>
-                <li>Gruppierung und Klassifizierung</li>
-                <li>Berechnung von Sicherheits- und Meldebeständen</li>
-                <li>Abgleich der Daten im Materialstamm SAP</li>
+                <li><?= $lang['erwartung_cf_1'] ?></li>
+                <li><?= $lang['erwartung_cf_2'] ?></li>
+                <li><?= $lang['erwartung_cf_3'] ?></li>
+                <li><?= $lang['erwartung_cf_4'] ?></li>
+                <li><?= $lang['erwartung_cf_5'] ?></li>
             </ul>
         </ul>
     </blockquote>
     <div class="container-fluid">
-        <p class="fs-2"><strong>An wen richtet sich der Workshop?</strong></p>
+        <p class="fs-2"><strong><?= $lang['an_wen'] ?></strong></p>
     </div>
     <blockquote class="blockquote">
         <ul class="list-unstyled">
             <ul>
-                <li>Sie möchten Ihr Wissen vertiefen und angrenzende Funktionen kennenlernen.</li>
-                <li>Sie sehen die Sicherheits- und Meldebestände als kritisch an und suchen nach Möglichkeiten einer automatischen Parameterpflege.</li>
-                <li>Als Produktverantwortlicher sind Sie neugierig auf die Administration der Anwendungen.</li>
-                <li>Sie arbeiten bereits täglich mit dem Modul.</li>
+                <li><?= $lang['an_wen_o_f1'] ?></li>
+                <li><?= $lang['an_wen_o_f2'] ?></li>
+                <li><?= $lang['an_wen_o_f3'] ?></li>
+                <li><?= $lang['an_wen_o_f4'] ?></li>
             </ul>
         </ul>
     </blockquote>
     <div class="container-fluid">
-        <p class="fs-2"><strong>Exklusives-Training online oder Offline </strong></p>
+        <p class="fs-2"><strong><?= $lang['exclusive'] ?> </strong></p>
         <blockquote class="blockquote">
-            <p>Sie möchten diese Schulung exklusiv für Ihr Unternehmen buchen? Für weitere Details wie Preis und Termine eine E-Mail an <a href="mailto:serxhio.zani@berater.ifm">serxhio.zani@berater.ifm</a> mit dem Betreff "Exklusives-Training" senden. Sie
-                werden eine Antwort in kurzer Zeit bekommen.
+            <p><?= $lang['exclusive_t1'] ?> <a href="mailto:serxhio.zani@berater.ifm">serxhio.zani@berater.ifm</a> <?= $lang['exclusive_t2'] ?>
             </p>
         </blockquote>
     </div>

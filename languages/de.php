@@ -83,7 +83,54 @@ return [
 'an_wen_o_f2' => 'Sie sehen die Sicherheits- und Meldebestände als kritisch an und suchen nach Möglichkeiten einer automatischen Parameterpflege.',
 'an_wen_o_f3' => 'Als Produktverantwortlicher sind Sie neugierig auf die Administration der Anwendungen',
 'an_wen_o_f4' => 'Sie arbeiten bereits täglich mit dem Modul.',
-'erfolg_schulung' => 'Sie haben eine Schulungsplatz reserviert. Sehen Sie jetzt ihre Reservierungen in ihrem Profil unter Meine Reservierungen.'
-    // Weitere Übersetzungen...
+'erfolg_schulung' => 'Sie haben eine Schulungsplatz reserviert. Sehen Sie jetzt ihre Reservierungen in ihrem Profil unter Meine Reservierungen.',
+'zielgruppe_t_c' => 'Für die Bereiche Disposition und/oder Bestandscontrolling',
+'buchen_co_e' => 'Buchen Sie jetzt eine Controlling Schulung für Einsteiger*innen',
+'buchen_co_f' => 'Buchen Sie jetzt eine Controlling Schulung für Fortgeschrittene',
+'textblock1_ce_ü' => 'Kennzahlen managen mit GIB Controlling',
+'textblock1_ce_t' => 'Anhand praxisnaher Beispiele zeigen wir Ihnen, wie Sie Kennzahlen deuten und bilden, Materialklassifizierungen anhand der ABC- und XYZ-Analysen vornehmen und wie Sie vom effektiven Einsatz der Reichweitenmatrix profitieren. Sie erfahren, wie
+Sie sicher durch Werks- und Materialnummern navigieren und wie Sie unterschiedliche Aggregationsebenen für Ihre Zwecke nutzen. Lernen Sie die unterstützende, dynamische Stammdatenpflege unter Zuhilfenahme des Formelwerks und der Dispoprofile
+kennen.',
+'erwartung1_ce' => 'Datenaufbau und Datenbasis',
+'erwartung2_ce' => 'Logistische Kennzahlen',
+'erwartung3_ce' => 'Klassifizierungsparameter einstellen und deren Ergebnisse interpretieren',
+'erwartung4_ce' => 'Möglichkeiten zur Parameterpflege aufzeigen',
+'textblock1_cf_ü' => 'Nachhaltige Bestandsoptimierung mit GIB Controlling',
+'textblock1_cf_t' => 'Wir zeigen Ihnen an praxisnahen Beispielen, wie Sie mit minimalem Zeitaufwand Ihre Bestände nachhaltig optimieren. Erfahren Sie mehr über die Handhabung von Materialgruppierungen, dem Einsatz von Regelwerken und Entscheidungsbäumen. Nutzen
+Sie die Vorteile des Formelwerks und die damit verbundene Möglichkeit einer automatisierten Fortschreibung der ermittelten Dispo-Parameter als Vorschlagswerte. Darüber hinaus zeigen wir Ihnen die individuelle Nutzung von Segmentierungsmerkmalen
+und der Wiederbeschaffungszeiten-Kalkulation. Lernen Sie die Vorzüge der spezifischen Parametrisierung und der Individualisierungsmöglichkeiten kennen und schätzen.',
+'textblock2_cf_t' => 'Sie sind in der Lage, den erweiterten Funktionsumfang des Moduls auf Ihre betrieblichen Anforderungen zu adaptieren. Sie kennen die technischen Möglichkeiten und können Anforderungen beurteilen, in den Funktionsumfang einordnen und teilweise
+umsetzen. Sie können eine automatische Berechnung von Sicherheits- und Meldebeständen hinterlegen und den Materialstamm in SAP abgleichen.',
+'erwartung_cf_1' => 'Administration',
+'erwartung_cf_2' => 'Eigene Klassifizierung am Beispiel des Produktlebenszyklus',
+'erwartung_cf_3' => 'Gruppierung und Klassifizierung',
+'erwartung_cf_4' => 'Berechnung von Sicherheits- und Meldebeständen',
+'erwartung_cf_5' => 'Abgleich der Daten im Materialstamm SAP',
+//kontakt.php
+'kontaktieren_sie' => 'Kontaktieren Sie uns',
+'ausfüllen_kontakt' => 'Füllen Sie das Formular aus, um uns eine Nachricht zu senden:',
+'betreff' => 'Betreff',
+'email' => 'Email',
+'nachricht' => 'Deine Nachricht',
+'nachricht_senden' => 'Nachricht senden',
+'kontaktinfo' => 'Kontaktinformationen',
+'büroadresse' => 'Büroadresse',
+'folgen_sie' => 'Folgen Sie uns',
+//profilanzeigen.php
+'meine_daten' => 'Meine Daten',
+'daten_aktualisieren' => 'Daten aktualisieren',
+'change_password' => 'Passwort ändern',
+'meine_reservierungen' => 'Meine Reservierungen',
+'reservierungen_verwalten' => 'Reservierungen verwalten',
+//profil.php
+'profil_bearbeiten' => 'Profildaten bearbeiten',
+'unternehmen' => 'Unternehmen', 
+'beruf' => 'Berufsbezeichnung',
+'daten_speichern' => 'Daten speichern', 
+'profil_löschen' => 'Profil löschen',
+'sind_sie_sicher' => 'Sind Sie sicher?',
+'wirklich' => 'Möchten Sie Ihr Profil wirklich löschen?',
+'ja_löschen' => 'Ja, löschen',
+'nein_abbrechen' => 'Nein, abbrechen',
 ];
 ?>

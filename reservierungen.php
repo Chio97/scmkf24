@@ -26,7 +26,7 @@
         }
         
         .container.mt-4 {
-            margin-bottom: 340px;
+            margin-bottom: 180px;
         }
     </style>
 </head>
@@ -197,7 +197,7 @@ if (!isset($_SESSION['benutzername'])) {
 
     </div>
 
-    <nav class="navbar fixed-bottom bg-body-tertiary ">
+    <nav class="navbar bottom bg-body-tertiary ">
 
         <nav class="nav flex-column ">
             <a class="nav-link " href="agb.html ">AGB</a>

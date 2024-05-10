@@ -22,6 +22,17 @@ if (isset($_POST['benutzername'])) {
 } else {
     die("Benutzername nicht gesetzt. Bitte stellen Sie sicher, dass Sie angemeldet sind.");
 }
+
+if (!isset($_SESSION['lang'])) {
+    $_SESSION['lang'] = 'de'; // Standardmäßig Deutsch
+}
+if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'de'])) {
+    $_SESSION['lang'] = $_GET['lang']; // Sprache ändern, wenn über GET-Parameter angefordert
+}
+
+// Sprachdateien basierend auf der gewählten Sprache laden
+$lang = require 'languages/' . $_SESSION['lang'] . '.php';
+
 // Datenbankverbindung
 $conn = new mysqli("Localhost", "root", "", "nutzer_db");
 if ($conn->connect_error) {
@@ -70,7 +81,7 @@ $conn->close();
 
 <body>
 
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <nav class="navbar bg-body-tertiary">
                 <div class="container-fluid">
@@ -84,86 +95,92 @@ $conn->close();
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="mainseite.php">Hauptseite</a>
+                        <a class="nav-link active" aria-current="page" href="mainseite.php"><?= $lang['mainseite'] ?></a>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Schulungen</a>
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?= $lang['training'] ?>
+                </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="opeinst.php">Operations für Einsteiger*innen</a></li>
-                                <li><a class="dropdown-item" href="opefort.php">Operations für Fortgeschrittene</a></li>
-                                <li><a class="dropdown-item" href="coeinst.php">Controlling für Einsteiger*innen</a></li>
-                                <li><a class="dropdown-item" href="cofortg.php">Controlling für Fortgeschrittene</a></li>
+                                <li><a class="dropdown-item" href="opeinst.php"><?= $lang['operations_einst'] ?></a></li>
+                                <li><a class="dropdown-item" href="opefort.php"><?= $lang['operations_fort'] ?></a></li>
+                                <li><a class="dropdown-item" href="coeinst.php"><?= $lang['controlling_einst'] ?></a></li>
+                                <li><a class="dropdown-item" href="cofortg.php"><?= $lang['controlling_fort'] ?></a></li>
                             </ul>
                         </li>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="kontakt.php">Kontakt</a>
+                        <a class="nav-link" href="kontakt.php"><?= $lang['contact'] ?></a>
                     </li>
                 </ul>
 
             </div>
-        </div>
-        <div class="d-flex" style="width: 11%">
-            <div class="dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownProfileLink" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="images/profil.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">Profil
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownProfileLink">
-                    <li><a class="dropdown-item" href="profilanzeigen.php">Profil anzeigen</a></li>
-                    <li><a class="dropdown-item" href="logout.php">Abmelden</a></li>
-                </ul>
+            <div class="d-flex" style="width: 11%">
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownProfileLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="images/profil.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top"> <?= $lang['profile'] ?>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownProfileLink">
+                        <li><a class="dropdown-item" href="profilanzeigen.php"><?= $lang['show_profile'] ?></a></li>
+                        <li><a class="dropdown-item" href="logout.php"><?= $lang['logout'] ?></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="d-flex" style="width: 11%">
+                <a href="?lang=de" class="btn btn-link">DE</a>
+                <a href="?lang=en" class="btn btn-link">EN</a>
             </div>
         </div>
     </nav>
     <div class="container-sm">
-        <h1>Profildaten bearbeiten</h1>
+        <h1><?= $lang['profil_bearbeiten'] ?></h1>
         <form class="row g-3 delete-form" method="POST" action="update.php">
             <div class="col-md-4">
-                <label for="validationDefault01" class="form-label">Vorname</label>
+                <label for="validationDefault01" class="form-label"><?= $lang['vorname'] ?></label>
                 <input type="text" class="form-control" id="vorname" name="vorname" value="<?php echo htmlspecialchars($vorname);?>">
             </div>
             <div class="col-md-4">
-                <label for="validationDefault02" class="form-label">Nachname</label>
+                <label for="validationDefault02" class="form-label"><?= $lang['nachname'] ?></label>
                 <input type="text" class="form-control" id="name" name="name" value="<?php echo htmlspecialchars($name);?>">
             </div>
             <div class="col-md-4">
-                <label for="validationDefaultUsername" class="form-label">Benutzername</label>
+                <label for="validationDefaultUsername" class="form-label"><?= $lang['username'] ?></label>
                 <div class="input-group">
                     <span class="input-group-text" id="inputGroupPrepend2">@</span>
                     <input type="text" class="form-control" id="benutzername" name="benutzername" value="<?php echo htmlspecialchars($benutzername);?>" aria-describedby="inputGroupPrepend2" readonly>
                 </div>
             </div>
             <div class="col-md-4">
-                <label for="validationDefault03" class="form-label">Unternehmen</label>
+                <label for="validationDefault03" class="form-label"><?= $lang['unternehmen'] ?></label>
                 <input type="text" class="form-control" id="unternehmen" name="unternehmen" value="<?php echo htmlspecialchars($unternehmen);?>">
             </div>
             <div class="col-md-4">
-                <label for="validationDefault04" class="form-label">Email</label>
+                <label for="validationDefault04" class="form-label"><?= $lang['email'] ?></label>
                 <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($email);?>">
             </div>
             <div class="col-md-4">
-                <label for="validationDefault05" class="form-label">Berufsbezeichnung</label>
+                <label for="validationDefault05" class="form-label"><?= $lang['beruf'] ?></label>
                 <input type="text" class="form-control" id="beruf" name="beruf" value="<?php echo htmlspecialchars($beruf);?>">
             </div>
             <h5> Rechnungsanschrifft </h5>
             <div class="col-md-4">
-                <label for="validationDefault06" class="form-label">Strasse und Hausnummer</label>
+                <label for="validationDefault06" class="form-label"><?= $lang['straße'] ?></label>
                 <input type="text" class="form-control" id="adresse" name="adresse" value="<?php echo htmlspecialchars($adresse);?>"> 
             </div>
             <div class="col-md-4">
-                <label for="validationDefault07" class="form-label">Postleitzahl</label>
+                <label for="validationDefault07" class="form-label"><?= $lang['plz'] ?></label>
                 <input type="number" class="form-control" id="plz" name="plz" value="<?php echo htmlspecialchars($plz);?>" >
             </div>
             <div class="col-md-4">
-                <label for="validationDefault08" class="form-label">Stadt</label>
+                <label for="validationDefault08" class="form-label"><?= $lang['stadt'] ?></label>
                 <input type="text" class="form-control" id="stadt" name="stadt" value="<?php echo htmlspecialchars($stadt);?>">
             </div>
             <div class="row mt-3">
                 <div class="col-md-2 mb-3">
-                    <button class="btn btn-primary" type="submit" name="action" value="save">Daten speichern</button>
+                    <button class="btn btn-primary" type="submit" name="action" value="save"><?= $lang['daten_speichern'] ?></button>
                 </div>
                 <div class="col-md-2 mb-3">
-                    <button class="btn btn-danger" type="submit" name="action" value="delete" onclick="return confirmDelete();">Profil löschen</button>
+                    <button class="btn btn-danger" type="submit" name="action" value="delete" onclick="return confirmDelete();"><?= $lang['profil_löschen'] ?></button>
                 </div>
             </div>
 
@@ -172,14 +189,14 @@ $conn->close();
         <script>
 function confirmDelete() {
     Swal.fire({
-        title: 'Sind Sie sicher?',
-        text: "Möchten Sie Ihr Profil wirklich löschen?",
+        title: '<?= $lang['sind_sie_sicher'] ?>',
+        text: "<?= $lang['wirklich'] ?>",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Ja, löschen!',
-        cancelButtonText: 'Nein, abbrechen!'
+        confirmButtonText: '<?= $lang['ja_löschen'] ?>',
+        cancelButtonText: '<?= $lang['nein_abbrechen'] ?>'
     }).then((result) => {
         if (result.isConfirmed) {
             // Erstelle ein verstecktes Input-Element, das die Aktion spezifiziert

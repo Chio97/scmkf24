@@ -52,7 +52,7 @@ $lang = require 'languages/' . $_SESSION['lang'] . '.php';
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <nav class="navbar bg-body-tertiary">
                 <div class="container-fluid">
@@ -110,8 +110,8 @@ $lang = require 'languages/' . $_SESSION['lang'] . '.php';
                 <a href="profil.php" class="card text-decoration-none text-dark">
                     <img src="images/daten.png" class="card-img-top" alt="Meine Daten">
                     <div class="card-body">
-                        <h5 class="card-title">Meine Daten</h5>
-                        <p class="card-text">Daten aktualisieren</p>
+                        <h5 class="card-title"><?= $lang['meine_daten'] ?></h5>
+                        <p class="card-text"><?= $lang['daten_aktualisieren'] ?></p>
                     </div>
                 </a>
             </div>
@@ -119,8 +119,8 @@ $lang = require 'languages/' . $_SESSION['lang'] . '.php';
                 <a href="passwort.php" class="card text-decoration-none text-dark">
                     <img src="images/change-password-51.png" class="card-img-top" alt="Passwort ändern">
                     <div class="card-body">
-                        <h5 class="card-title">Passwort</h5>
-                        <p class="card-text">Passwort ändern</p>
+                        <h5 class="card-title"><?= $lang['password'] ?></h5>
+                        <p class="card-text"><?= $lang['change_password'] ?></p>
                     </div>
                 </a>
             </div>
@@ -128,8 +128,8 @@ $lang = require 'languages/' . $_SESSION['lang'] . '.php';
                 <a href="reservierungen.php" class="card text-decoration-none text-dark">
                     <img src="images/reservation.avif" class="card-img-top" alt="Meine Reservierungen">
                     <div class="card-body">
-                        <h5 class="card-title">Meine Reservierungen</h5>
-                        <p class="card-text">Reservierungen angucken</p>
+                        <h5 class="card-title"><?= $lang['meine_reservierungen']?></h5>
+                        <p class="card-text"><?= $lang['reservierungen_verwalten'] ?></p>
                     </div>
                 </a>
             </div>
@@ -139,12 +139,12 @@ $lang = require 'languages/' . $_SESSION['lang'] . '.php';
         <nav class="navbar fixed-bottom bg-body-tertiary ">
 
             <nav class="nav flex-column ">
-                <a class="nav-link " href="agb.html ">AGB</a>
+                <a class="nav-link " href="agb.html "><?= $lang['agb'] ?></a>
                 <a class="nav-link " href="impressum.html ">Impressum</a>
-                <a class="nav-link " href="datenschutz.html ">Datenschutz</a>
+                <a class="nav-link " href="datenschutz.html "><?= $lang['datenschutz'] ?></a>
             </nav>
             <div class="footer-social ">
-                <div class="footer-copyright ">© ifm electronic gmbh 2024</div>
+                <div class="footer-copyright ">© ifm business solutions 2024</div>
             </div>
             <div class="footer-subsidiary" style="padding: 1%">
                 <p><strong>ifm business solutions</strong><br /> Martinshardt 19<br /> 57074&nbsp;Siegen

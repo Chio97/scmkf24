@@ -140,7 +140,7 @@ if (isset($_SESSION['notification'])) {
                         <h5 class="card-title"><?= $lang['veranstaltungsort'] ?></h5>
                         <p class="card-text"><?= $lang['veranstaltungsort_t'] ?></p>
                         <h5 class="card-title"><?= $lang['zielgruppe'] ?></h5>
-                        <p class="card-text">Für die Bereiche Disposition und/oder Bestandscontrolling</p>
+                        <p class="card-text"><?= $lang['zielgruppe_t_c'] ?></p>
                         <h5 class="card-title"><?= $lang['teilnehmergebühr'] ?></h5>
                         <p class="card-text">580 €</p>
                         <!-- Button trigger modal -->
@@ -152,7 +152,7 @@ if (isset($_SESSION['notification'])) {
                             <div class="modal-dialog text-dark">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Buchen Sie jetzt eine Controlling Schulung für Einsteiger*innen</h1>
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel"><?= $lang['buchen_co_e'] ?></h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -250,44 +250,38 @@ if (isset($_SESSION['notification'])) {
     </div>
     </div>
     <div class="container-fluid">
-        <p class="fs-2"><strong>Kennzahlen managen mit GIB Controlling</strong></p>
+        <p class="fs-2"><strong><?= $lang['textblock1_ce_ü'] ?></strong></p>
         <blockquote class="blockquote">
-            <p>Anhand praxisnaher Beispiele zeigen wir Ihnen, wie Sie Kennzahlen deuten und bilden, Materialklassifizierungen anhand der ABC- und XYZ-Analysen vornehmen und wie Sie vom effektiven Einsatz der Reichweitenmatrix profitieren. Sie erfahren, wie
-                Sie sicher durch Werks- und Materialnummern navigieren und wie Sie unterschiedliche Aggregationsebenen für Ihre Zwecke nutzen. Lernen Sie die unterstützende, dynamische Stammdatenpflege unter Zuhilfenahme des Formelwerks und der Dispoprofile
-                kennen.
-            </p>
+            <p><?= $lang['textblock1_ce_t'] ?></p>
         </blockquote>
     </div>
     <div class="container-fluid">
-        <p class="fs-2"><strong>Ihr Nutzen</strong></p>
+        <p class="fs-2"><strong><?= $lang['ihr_nutzen'] ?></strong></p>
         <blockquote class="blockquote">
-            <p>Sie lernen die Funktionsweise der Module kennen und sind in der Lage, Selektionen und Layouts prozessbezogen aufzubauen und anzuwenden. Logistische Kennzahlen helfen Ihnen, Prozesse zu bewerten und mithilfe der Klassifizierung können Sie Ihr
-                Materialspektrum besser beurteilen sowie Beschaffungsstrategien ableiten.
-            </p>
+            <p><?= $lang['ihr_nutzen_t'] ?></p>
         </blockquote>
     </div>
     <div class="container-fluid">
-        <p class="fs-2"><strong>Was erwartet Sie in diesem Workshop?</strong></p>
+        <p class="fs-2"><strong><?= $lang['erwartung'] ?></strong></p>
     </div>
     <blockquote class="blockquote">
         <ul class="list-unstyled">
             <ul>
-                <li>Datenaufbau und Datenbasis</li>
-                <li>Logistische Kennzahlen</li>
-                <li>Klassifizierungsparameter einstellen und deren Ergebnisse interpretieren</li>
-                <li>Möglichkeiten zur Parameterpflege aufzeigen</li>
+                <li><?= $lang['erwartung1_ce'] ?></li>
+                <li><?= $lang['erwartung2_ce'] ?></li>
+                <li><?= $lang['erwartung3_ce'] ?></li>
+                <li><?= $lang['erwartung4_ce'] ?></li>
             </ul>
         </ul>
     </blockquote>
     <div class="container-fluid">
-        <p class="fs-2"><strong>An wen richtet sich der Workshop?</strong></p>
+        <p class="fs-2"><strong><?= $lang['an_wen'] ?></strong></p>
     </div>
     <blockquote class="blockquote">
         <ul class="list-unstyled">
             <ul>
-                <li>Sie sind in den Bereichen Disposition und/oder Bestandscontrolling zu Hause.</li>
-                <li>Sie möchten mehr über die Möglichkeiten einer prozessorientierten, transparenten Arbeitsweise in der GIB Suite erfahren.</li>
-                <li>Sie benötigen für diesen Workshop keine spezifischen Vorkenntnisse</li>
+                <li><?= $lang['an_wen_t1'] ?></li>
+                <li><?= $lang['an_wen_t2'] ?></li>
             </ul>
         </ul>
     </blockquote>
