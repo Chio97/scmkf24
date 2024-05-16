@@ -223,9 +223,9 @@ function confirmDelete() {
     <nav class="navbar fixed-bottom bg-body-tertiary">
 
         <nav class="nav flex-column">
-            <a class="nav-link" href="agb.html">AGB</a>
+            <a class="nav-link" href="agb.html"><?= $lang['agb'] ?></a>
             <a class="nav-link" href="impressum.html">Impressum</a>
-            <a class="nav-link" href="datenschutz.html">Datenschutz</a>
+            <a class="nav-link" href="datenschutz.html"><?= $lang['datenschutz'] ?></a>
         </nav>
         <div class="footer-social">
             <div class="footer-copyright">© ifm electronic gmbh 2024</div>

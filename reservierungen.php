@@ -1,3 +1,23 @@
+<?php 
+session_start();
+include 'db.php'; // Stellen Sie sicher, dass Ihre Datenbankverbindungsdatei richtig einbinden
+
+
+if (!isset($_SESSION['benutzername'])) {
+    echo "<p class='alert alert-danger'>Bitte zuerst einloggen.</p>";
+} else {
+    $benutzername = $_SESSION['benutzername'];
+
+    if (!isset($_SESSION['lang'])) {
+
+        $_SESSION['lang'] = 'de'; // Standardmäßig Deutsch
+    }
+    if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'de'])) {
+        $_SESSION['lang'] = $_GET['lang']; // Sprache ändern, wenn über GET-Parameter angefordert
+    }
+    $lang = require 'languages/' . $_SESSION['lang'] . '.php';
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -32,7 +52,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <nav class="navbar bg-body-tertiary">
                 <div class="container-fluid">
@@ -46,23 +66,22 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="mainseite.php">Hauptseite</a>
+                        <a class="nav-link active" aria-current="page" href="mainseite.php"><?= $lang['mainseite'] ?></a>
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Schulungen
+                            <?= $lang['training'] ?>
                 </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="opeinst.php">Operations für Einsteiger*innen</a></li>
-                                <li><a class="dropdown-item" href="opefort.php">Operations für Fortgeschrittene</a></li>
-                                <li><a class="dropdown-item" href="coeinst.php">Controlling für Einsteiger*innen</a></li>
-                                <li><a class="dropdown-item" href="cofortg.php">Controlling für Fortgeschrittene</a></li>
+                                <li><a class="dropdown-item" href="opeinst.php"><?= $lang['operations_einst'] ?></a></li>
+                                <li><a class="dropdown-item" href="opefort.php"><?= $lang['operations_fort'] ?></a></li>
+                                <li><a class="dropdown-item" href="coeinst.php"><?= $lang['controlling_einst'] ?></a></li>
+                                <li><a class="dropdown-item" href="cofortg.php"><?= $lang['controlling_fort'] ?></a></li>
                             </ul>
                         </li>
                     </li>
-                    
                     <li class="nav-item">
-                        <a class="nav-link" href="kontakt.php">Kontakt</a>
+                        <a class="nav-link" href="kontakt.php"><?= $lang['contact'] ?></a>
                     </li>
                 </ul>
 
@@ -70,29 +89,26 @@
             <div class="d-flex" style="width: 11%">
                 <div class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownProfileLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="images/profil.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top"> Profil
+                        <img src="images/profil.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top"> <?= $lang['profile'] ?>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownProfileLink">
-                        <li><a class="dropdown-item" href="profilanzeigen.php">Profil bearbeiten</a></li>
-                        <li><a class="dropdown-item" href="logout.php">Abmelden</a></li>
+                        <li><a class="dropdown-item" href="profilanzeigen.php"><?= $lang['show_profile'] ?></a></li>
+                        <li><a class="dropdown-item" href="logout.php"><?= $lang['logout'] ?></a></li>
                     </ul>
                 </div>
             </div>
-
+            <div class="d-flex" style="width: 11%">
+                <a href="?lang=de" class="btn btn-link">DE</a>
+                <a href="?lang=en" class="btn btn-link">EN</a>
+            </div>
         </div>
     </nav>
 
     <div class="container mt-4">
-        <h1>Meine Reservierungen</h1>
+        <h1><?= $lang['meine_reservierungen'] ?></h1>
         <?php
-session_start();
-include 'db.php'; // Stellen Sie sicher, dass Ihre Datenbankverbindungsdatei richtig einbinden
 
-if (!isset($_SESSION['benutzername'])) {
-    echo "<p class='alert alert-danger'>Bitte zuerst einloggen.</p>";
-} else {
-    $benutzername = $_SESSION['benutzername'];
-
+    
     if (isset($_SESSION['notification'])) {
         echo "<div id='notification-alert' class='alert alert-success'>" . $_SESSION['notification'] . "</div>";
         unset($_SESSION['notification']); // Benachrichtigung aus der Session entfernen
@@ -129,12 +145,13 @@ if (!isset($_SESSION['benutzername'])) {
 
         if ($result->num_rows > 0) {
             echo "<table class='table'>";
-            echo "<thead><tr><th>ReservierungsID</th><th>Termin</th><th>Modul</th><th>Schulungsart</th><th>Sprache</th><th>Vorname</th><th>Nachname</th><th>Benutzername</th><th>Rechnung</th></tr></thead>";
+            echo "<thead><tr><th>" . $lang['reservierungsid'] . "</th><th>" . $lang['termin'] . "</th><th>" . $lang['modul'] . "</th><th>" . $lang['schulungsart'] . "</th><th>" . $lang['sprache'] . "</th><th>" . $lang['vorname'] . "</th><th>" . $lang['nachname'] . "</th><th>" . $lang['username'] . "</th><th>" . $lang['rechnung'] . "</th></tr></thead>";
             echo "<tbody>";
             while ($row = $result->fetch_assoc()) {
 
-                $bezahltString = $row['bezahlt'] ? "Bezahlt" : "Nicht Bezahlt";
+                $bezahltString = $row['bezahlt'] ? $lang['bezahlt'] : $lang['nicht_bezahlt'];
                 $bezahltClass = $row['bezahlt'] ? "text-success" : "text-danger";
+                
                 echo "<tr>
                         <td>" . htmlspecialchars($row['reservierungsid']) . "</td>
                         <td>" . htmlspecialchars($row['termin']) . "</td>
@@ -147,34 +164,36 @@ if (!isset($_SESSION['benutzername'])) {
                         <td class='$bezahltClass'>" . htmlspecialchars($bezahltString) . "</td>
                         <td> 
                         <form class='delete-form' method='POST' action='stornieren.php'>
-                        <input type='hidden' name='reservierungsid' value='" . $row['reservierungsid'] . "'>
-                        <button type='button' onclick='confirmDelete(this.form)' class='btn btn-danger'>Reservierung stornieren</button>
-                    </form>
-                    <button type='button' class='btn btn-info btn-sm' data-bs-toggle='modal' data-bs-target='#rechnungstraegerModal" . $row['reservierungsid'] . "'>
-                    <i class='fas fa-info-circle'></i> Rechnungsträger
-                </button>
-                        </td>
-                      </tr>";
+    <input type='hidden' name='reservierungsid' value='" . $row['reservierungsid'] . "'>
+    <button type='button' onclick='confirmDelete(this.form)' class='btn btn-danger'>" . $lang['reservierung_stornieren'] . "</button>
+</form>
+<button type='button' class='btn btn-info btn-sm' data-bs-toggle='modal' data-bs-target='#rechnungstraegerModal" . $row['reservierungsid'] . "'>
+    <i class='fas fa-info-circle'></i> " . $lang['rechnungsträger'] . "
+</button>
+</td>
+</tr>";
                       echo "<div class='modal fade' id='rechnungstraegerModal" . $row['reservierungsid'] . "' tabindex='-1' aria-labelledby='rechnungstraegerModalLabel" . $row['reservierungsid'] . "' aria-hidden='true'>
-                                <div class='modal-dialog modal-dialog-centered'>
-                                    <div class='modal-content'>
-                                        <div class='modal-header'>
-                                            <h5 class='modal-title' id='rechnungstraegerModalLabel" . $row['reservierungsid'] . "'>Rechnungsträger Informationen</h5>
-                                            <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
-                                        </div>
-                                        <div class='modal-body'>
-                                            <p><strong>Vorname:</strong> " . htmlspecialchars($row['traeger_vorname']) . "</p>
-                                            <p><strong>Nachname:</strong> " . htmlspecialchars($row['traeger_nachname']) . "</p>
-                                            <p><strong>Straße:</strong> " . htmlspecialchars($row['strasse']) . "</p>
-                                            <p><strong>Stadt:</strong> " . htmlspecialchars($row['stadt']) . "</p>
-                                            <p><strong>PLZ:</strong> " . htmlspecialchars($row['plz']) . "</p>
-                                        </div>
-                                        <div class='modal-footer'>
-                                            <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Schließen</button>
-                                        </div>
-                                    </div>
-                                </div>
-                              </div>";
+                      <div class='modal-dialog modal-dialog-centered'>
+                          <div class='modal-content'>
+                              <div class='modal-header'>
+                                  <h5 class='modal-title' id='rechnungstraegerModalLabel" . $row['reservierungsid'] . "'>" . $lang['rechnungsträger_information'] . "</h5>
+                                  <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                              </div>
+                              <div class='modal-body'>
+                                  <p><strong>" . $lang['vorname'] . "</strong> " . htmlspecialchars($row['traeger_vorname']) . "</p>
+                                  <p><strong>". $lang['nachname'] ."</strong> " . htmlspecialchars($row['traeger_nachname']) . "</p>
+                                  <p><strong>". $lang['straße'] ."</strong> " . htmlspecialchars($row['strasse']) . "</p>
+                                  <p><strong>". $lang['stadt'] ."</strong> " . htmlspecialchars($row['stadt']) . "</p>
+                                  <p><strong>". $lang['plz'] ."</strong> " . htmlspecialchars($row['plz']) . "</p>
+                              </div>
+                              <div class='modal-footer'>
+                                  <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Schließen</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>";
+                  
+                  
             }
             echo "</tbody></table>";
         } else {
@@ -188,8 +207,8 @@ if (!isset($_SESSION['benutzername'])) {
 }
 ?>
 <div>
-    <p>Nach Erhalt der Rechnung haben Sie 14 Tage Zeit, die Rechnung abzugleichen. Andernfalls wird die Reservierung gelöscht.</p>
-    <p>Wenn die Rechnung bezahlt wurde, erhalten Sie 48 Stunden vor Kursbeginn Zugangsdaten für das SAP-System.</p>
+    <p><?= $lang['erhalt_rechnung'] ?></p>
+    <p><?= $lang['wenn_rechnung_bezahlt'] ?></p>
 </div>
 
 
@@ -200,9 +219,9 @@ if (!isset($_SESSION['benutzername'])) {
     <nav class="navbar bottom bg-body-tertiary ">
 
         <nav class="nav flex-column ">
-            <a class="nav-link " href="agb.html ">AGB</a>
+            <a class="nav-link " href="agb.html "><?= $lang['agb'] ?></a>
             <a class="nav-link " href="impressum.html ">Impressum</a>
-            <a class="nav-link " href="datenschutz.html ">Datenschutz</a>
+            <a class="nav-link " href="datenschutz.html "><?= $lang['datenschutz'] ?></a>
         </nav>
         <div class="footer-social ">
             <div class="footer-copyright ">© ifm electronic gmbh 2024</div>
@@ -219,14 +238,14 @@ if (!isset($_SESSION['benutzername'])) {
     <script>
 function confirmDelete(form) {
     Swal.fire({
-        title: 'Sind Sie sicher?',
-        text: "Möchten Sie diese Reservierung wirklich stornieren?",
+        title: '<?= $lang['sind_sie_sicher'] ?>',
+        text: "<?= $lang['wirklich_stornieren'] ?>",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Ja, stornieren!',
-        cancelButtonText: 'Nein, abbrechen!'
+        confirmButtonText: '<?= $lang['ja_löschen'] ?>',
+        cancelButtonText: '<?= $lang['nein_abbrechen'] ?>'
     }).then((result) => {
         if (result.isConfirmed) {
             // Erstelle ein verstecktes Input-Element, das die Aktion spezifiziert

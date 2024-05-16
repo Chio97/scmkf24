@@ -128,7 +128,25 @@ and the MRP profiles.',
 'wirklich' => 'Do you really want do delete this profile?',
 'ja_löschen' => 'Yes, delete',
 'nein_abbrechen' => 'No, cancel',
-
+'altes_passwort' => 'Old Password: ',
+'neues_passwort' => 'New Password: ',
+'passwort_bestätigen' => 'Confirm your password: ',
+'passwort_ändern' => 'Change password',
+//reservierungen.php
+'reservierungsid' => 'ReservierungsID',
+'termin' => 'Date',
+'modul' => 'Course',
+'schulungsart' => 'Art of the Course', 
+'sprache' => 'Language',
+'rechnung' => 'Invoice',
+'bezahlt' => 'Paid',
+'nicht_bezahlt' => 'Not paid',
+'reservierung_stornieren' => 'Cancel your Reservation',
+'rechnungsträger' => 'Invoice recipient',
+'rechnungsträger_information' => 'Invoice  information',
+'erhalt_rechnung' => 'After receiving the invoice, you have 14 days to reconcile the invoice. Otherwise the reservation will be deleted.',
+'wenn_rechnung_bezahlt' => 'If the invoice has been paid, you will receive access data for the SAP system 48 hours before the course starts',
+'wirklich_stornieren' => 'Do you really want to cancel this reservation?',
 ];
 ?>
 

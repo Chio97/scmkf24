@@ -10,6 +10,14 @@ if (!isset($_SESSION['benutzername'])) {
 
 $message = "";
 
+if (!isset($_SESSION['lang'])) {
+    $_SESSION['lang'] = 'de'; // Standardmäßig Deutsch
+}
+if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'de'])) {
+    $_SESSION['lang'] = $_GET['lang']; // Sprache ändern, wenn über GET-Parameter angefordert
+}
+$lang = require 'languages/' . $_SESSION['lang'] . '.php';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['old_password'], $_POST['new_password'], $_POST['confirm_password'])) {
     $old_password = $_POST['old_password'];
     $new_password = $_POST['new_password'];
@@ -72,34 +80,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['old_password'], $_POST
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="mainseite.php">Hauptseite</a>
+                        <a class="nav-link active" aria-current="page" href="mainseite.php"><?= $lang['mainseite'] ?></a>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Schulungen</a>
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?= $lang['training'] ?>
+                </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="opeinst.php">Operations für Einsteiger*innen</a></li>
-                                <li><a class="dropdown-item" href="opefort.php">Operations für Fortgeschrittene</a></li>
-                                <li><a class="dropdown-item" href="coeinst.php">Controlling für Einsteiger*innen</a></li>
-                                <li><a class="dropdown-item" href="cofortg.php">Controlling für Fortgeschrittene</a></li>
+                                <li><a class="dropdown-item" href="opeinst.php"><?= $lang['operations_einst'] ?></a></li>
+                                <li><a class="dropdown-item" href="opefort.php"><?= $lang['operations_fort'] ?></a></li>
+                                <li><a class="dropdown-item" href="coeinst.php"><?= $lang['controlling_einst'] ?></a></li>
+                                <li><a class="dropdown-item" href="cofortg.php"><?= $lang['controlling_fort'] ?></a></li>
                             </ul>
                         </li>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="kontakt.php">Kontakt</a>
+                        <a class="nav-link" href="kontakt.php"><?= $lang['contact'] ?></a>
                     </li>
                 </ul>
 
             </div>
-        </div>
-        <div class="d-flex" style="width: 11%">
-            <div class="dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownProfileLink" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="images/profil.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">Profil
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownProfileLink">
-                    <li><a class="dropdown-item" href="profilanzeigen.php">Profil anzeigen</a></li>
-                    <li><a class="dropdown-item" href="logout.php">Abmelden</a></li>
-                </ul>
+            <div class="d-flex" style="width: 11%">
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownProfileLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="images/profil.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top"> <?= $lang['profile'] ?>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownProfileLink">
+                        <li><a class="dropdown-item" href="profilanzeigen.php"><?= $lang['show_profile'] ?></a></li>
+                        <li><a class="dropdown-item" href="logout.php"><?= $lang['logout'] ?></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="d-flex" style="width: 11%">
+                <a href="?lang=de" class="btn btn-link">DE</a>
+                <a href="?lang=en" class="btn btn-link">EN</a>
             </div>
         </div>
     </nav>
@@ -118,27 +132,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['old_password'], $_POST
     <?php endif; ?>
     <form action="passwort.php" method="post" class="mt-4">
         <div class="mb-3 position-relative">
-            <label for="old_password" class="form-label">Altes Passwort:</label>
+            <label for="old_password" class="form-label"><?= $lang['altes_passwort'] ?></label>
             <input type="password" class="form-control" id="old_password" name="old_password" required>
             <span class="position-absolute top-50 end-0 translate-middle-y me-3 toggle-password" style="cursor: pointer; margin-top: 1rem;" onclick="togglePassword('old_password')">
                 <i class="fa fa-eye" id="toggleOldPassword"></i>
             </span>
         </div>
         <div class="mb-3 position-relative">
-            <label for="new_password" class="form-label">Neues Passwort:</label>
+            <label for="new_password" class="form-label"><?= $lang['neues_passwort'] ?></label>
             <input type="password" class="form-control" id="new_password" name="new_password" required>
             <span class="position-absolute top-50 end-0 translate-middle-y me-3 toggle-password" style="cursor: pointer; margin-top: 1rem;" onclick="togglePassword('new_password')">
                 <i class="fa fa-eye" id="toggleNewPassword"></i>
             </span>
         </div>
         <div class="mb-3 position-relative">
-            <label for="confirm_password" class="form-label">Passwort bestätigen:</label>
+            <label for="confirm_password" class="form-label"><?= $lang['passwort_bestätigen'] ?></label>
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
             <span class="position-absolute top-50 end-0 translate-middle-y me-3 toggle-password" style="cursor: pointer; margin-top: 1rem;" onclick="togglePassword('confirm_password')">
                 <i class="fa fa-eye" id="toggleConfirmPassword"></i>
             </span>
         </div>
-        <button type="submit" class="btn btn-primary">Passwort ändern</button>
+        <button type="submit" class="btn btn-primary"><?= $lang['passwort_ändern'] ?></button>
     </form>
 </div>
 <script>

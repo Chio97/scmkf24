@@ -132,5 +132,25 @@ umsetzen. Sie können eine automatische Berechnung von Sicherheits- und Meldebes
 'wirklich' => 'Möchten Sie Ihr Profil wirklich löschen?',
 'ja_löschen' => 'Ja, löschen',
 'nein_abbrechen' => 'Nein, abbrechen',
+'altes_passwort' => 'Altes Passwort: ',
+'neues_passwort' => 'Neues Passwort: ',
+'passwort_bestätigen' => 'Passwort bestätigen: ',
+'passwort_ändern' => 'Passwort ändern',
+//reservierungen.php
+'reservierungsid' => 'ReservierungsID',
+'termin' => 'Termin',
+'modul' => 'Kurs',
+'schulungsart' => 'Schulungsart', 
+'sprache' => 'Sprache',
+'rechnung' => 'Rechnung',
+'bezahlt' => 'Bezahlt',
+'nicht_bezahlt' => 'Nicht bezahlt',
+'reservierung_stornieren' => 'Reservierung stornieren',
+'rechnungsträger' => 'Rechnungsträger',
+'rechnungsträger_information' => 'Rechnungsträger Informationen',
+'erhalt_rechnung' => 'Nach Erhalt der Rechnung haben Sie 14 Tage Zeit, die Rechnung abzugleichen. Andernfalls wird die Reservierung gelöscht.',
+'wenn_rechnung_bezahlt' => 'Wenn die Rechnung bezahlt wurde, erhalten Sie 48 Stunden vor Kursbeginn Zugangsdaten für das SAP-System.',
+'wirklich_stornieren' => 'Möchten Sie diese Reservierung wirklich stornieren?',
+
 ];
 ?>
