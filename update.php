@@ -1,6 +1,15 @@
 <?php
 session_start();
-include 'db.php';  // Datenbankverbindung einbinden
+include 'db.php';  
+
+if (!isset($_SESSION['lang'])) {
+    $_SESSION['lang'] = 'de'; 
+}
+if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'de'])) {
+    $_SESSION['lang'] = $_GET['lang']; 
+}
+
+$lang = require 'languages/' . $_SESSION['lang'] . '.php';
 
 if (!isset($_SESSION['benutzername'])) {
     die("Benutzername nicht gesetzt. Bitte stellen Sie sicher, dass Sie angemeldet sind.");
@@ -13,19 +22,19 @@ if ($conn->connect_error) {
     die("Verbindung fehlgeschlagen: " . $conn->connect_error);
 }
 
-// Sicherstellen, dass die Aktion gesetzt wurde
+
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'save') {
         $stmt = $conn->prepare("UPDATE nutzerdaten SET vorname = ?, name = ?, email = ?, unternehmen = ?, beruf = ?, adresse = ?, plz = ?, stadt = ? WHERE benutzername = ?");
         $stmt->bind_param("sssssssss", $_POST['vorname'], $_POST['name'], $_POST['email'], $_POST['unternehmen'], $_POST['beruf'], $_POST['adresse'], $_POST['plz'], $_POST['stadt'], $benutzername);
         
-        print_r($_POST); // Debugging der POST-Daten
+        print_r($_POST); 
         $stmt->execute();
     
         if ($stmt->affected_rows > 0) {
-            $_SESSION['notification'] = "Daten erfolgreich geändert.";
+            $_SESSION['notification'] = $lang['daten_geändert'];
         } else {
-            $_SESSION['notification'] = "Keine Änderung vorgenommen. " . $stmt->error;
+            $_SESSION['notification'] = $lang['keine_änderung'] . $stmt->error;
         }
         $stmt->close();
         header("Location: profil.php");
@@ -37,17 +46,17 @@ if (isset($_POST['action'])) {
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
-            $_SESSION['notification'] = "Profil erfolgreich gelöscht.";
-            session_destroy();  // Session löschen, da der Benutzer gelöscht wurde
-            header("Location: goodbye.php"); // Weiterleitung zur Abschiedsseite
+            $_SESSION['notification'] = $lang['profil_gelöscht'];
+            session_destroy();  
+            header("Location: goodbye.php"); 
             exit();
         } else {
-            $_SESSION['notification'] = "Fehler beim Löschen des Profils.";
+            $_SESSION['notification'] = $lang['fehler_löschen'];
             header("Location: profil.php");
             exit();
         }
 } else {
-    // Falls kein 'action' Wert übermittelt wurde, zurück zur Profilseite
+
     header("Location: profil.php");
     exit();
 }

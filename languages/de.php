@@ -151,6 +151,53 @@ umsetzen. Sie können eine automatische Berechnung von Sicherheits- und Meldebes
 'erhalt_rechnung' => 'Nach Erhalt der Rechnung haben Sie 14 Tage Zeit, die Rechnung abzugleichen. Andernfalls wird die Reservierung gelöscht.',
 'wenn_rechnung_bezahlt' => 'Wenn die Rechnung bezahlt wurde, erhalten Sie 48 Stunden vor Kursbeginn Zugangsdaten für das SAP-System.',
 'wirklich_stornieren' => 'Möchten Sie diese Reservierung wirklich stornieren?',
+//register1.php
+'zurueck_login' => 'Zurück zum Login Seite',
+'erstellen_konto' => 'Erstellen Sie jetzt ein neues Konto!',
+'persönliche_daten' => 'Persönliche Daten',
+'firmenanschrifft' => 'Firmenanschrifft',
+'firmenanschrifft_t' => 'wird bei Buchungen als Rechnungsanschrifft übernommen',
+'sicherheitsfrage' => 'Sicherheitsfrage',
+'frage_auswählen' => 'Frage auswählen',
+'geburtstort_vater' => 'Was ist der Geburtsort Ihres Vaters',
+'name_bester_freund' => 'Wie lautet der Name Ihres besten Freundes in der Kindheit?',
+'lieblingsfilm' => 'Was ist Ihr Lieblingsfilm?',
+'lieblingsessen' => 'Was ist Ihr Lieblingsessen?',
+'antwort' => 'Antwort',
+'kontoerstellen' => 'Konto erstellen',
+//passwort_zurueck.php
+'passwort_zurück' => 'Passwort zurücksetzen',
+'passwort_vergessen' => 'Passwort vergessen?',
+//update.php
+'daten_geändert' => 'Daten erfogreich geändert',
+'keine_änderung' => 'Keine Änderungen vorgenommen',
+'profil_gelöscht' => 'Profil erfolgreich gelöscht',
+'fehler_löschen' => 'Fehler beim Löschen des Profils',
+//registrations_success.php
+'sie_werde_weitergeleitet' => 'Sie werden gleich weitergeleitet...',
+
+
+'field_required' => 'Füllen Sie dieses Feld aus!',
+
+'termin_bereits_gebucht' => 'Sie haben diesen Termin bereits gebucht.',
+'datenbankfehler' => 'Datenbankfehler: ',
+'buchung_erfolgreich' => 'Die Schulung wurde erfolgreich gebucht! Sie können Ihre Reservierung bei Meine Reservierungen in Ihrem Profil anschauen!',
+'buchung_fehlgeschlagen' => 'Fehler beim Buchen der Schulung: ',
+'felder_ausfuellen' => 'Bitte füllen Sie alle erforderlichen Felder aus.',
+
+
+//stornieren.php
+'reservierung_storniert' => 'Reservierung erfolgreich storniert',
+'reservierung_nicht_storniert' => 'Fehler beim stornieren',
+
+'einsteiger' => 'Einsteiger',
+'fortgeschritten' => 'Fortgeschritten',
+
+//passwort.php
+'passwort_geaendert' => 'Passwort erfolgreich geändert!',
+'passwort_nicht_geaendert' => 'Fehler beim Aktualisieren des Passworts.',
+'passwort_fehler' => 'Das alte Passwort ist nicht korrekt oder die neuen Passwörter stimmen nicht überein.',
+'passwort_abruf_fehler' => 'Fehler beim Abrufen des alten Passworts.',
 
 ];
 ?>

@@ -12,23 +12,23 @@
 <?php
     session_start();
     if (!isset($_SESSION['lang'])) {
-        $_SESSION['lang'] = 'de'; // Standardmäßig Deutsch
+        $_SESSION['lang'] = 'de'; 
     }
     if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'de'])) {
-        $_SESSION['lang'] = $_GET['lang']; // Sprache ändern, wenn über GET-Parameter angefordert
+        $_SESSION['lang'] = $_GET['lang']; 
     }
     
-    // Sprachdateien basierend auf der gewählten Sprache laden
+    
     $lang = require 'languages/' . $_SESSION['lang'] . '.php';
 
     if (!isset($_SESSION['benutzername'])) {
-        // Keine Session vorhanden, also Umleitung zur Login-Seite
+
         header("Location: newindex.php");
         exit;
     }
 
     ?>
-    <!-- Ihr restlicher HTML-Code folgt hier -->
+
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <nav class="navbar bg-body-tertiary">
@@ -56,6 +56,9 @@
                                 <li><a class="dropdown-item" href="cofortg.php"><?= $lang['controlling_fort'] ?></a></li>
                             </ul>
                         </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reservierungen.php"><?= $lang['meine_reservierungen'] ?></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="kontakt.php"><?= $lang['contact'] ?></a>

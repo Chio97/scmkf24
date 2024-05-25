@@ -1,5 +1,17 @@
 <?php
-session_start(); // Start der Sitzung
+session_start(); 
+
+include 'db.php'; 
+
+if (!isset($_SESSION['lang'])) {
+    $_SESSION['lang'] = 'de'; // Standardmäßig Deutsch
+}
+if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'de'])) {
+    $_SESSION['lang'] = $_GET['lang']; // Sprache ändern
+}
+
+// Sprachdatei
+$lang = require 'languages/' . $_SESSION['lang'] . '.php';
 
 // Überprüfen, ob eine Erfolgsmeldung vorhanden ist
 if (isset($_SESSION['success_message'])) {
@@ -12,6 +24,8 @@ if (isset($_SESSION['error_message'])) {
     echo '<div class="alert alert-danger" role="alert" id="errorMessage">' . $_SESSION['error_message'] . '</div>';
     unset($_SESSION['error_message']); // Fehlermeldung entfernen
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +33,7 @@ if (isset($_SESSION['error_message'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Passwort zurücksetzen</title>
+    <title> <?= $lang['passwort_zurück'] ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .register-container {
@@ -40,44 +54,47 @@ if (isset($_SESSION['error_message'])) {
     </style>
 </head>
 <body>
-
     <div class="container-sm register-container">
+    <div class="d-flex" style="width: 11%; margin-left: auto;">
+                <a href="?lang=de" class="btn btn-link">DE</a>
+                <a href="?lang=en" class="btn btn-link">EN</a>
+            </div>
     <a href="newindex.php" class="btn btn-secondary" style="background-color: #808080; color: #fff; border-color: #808080;">
-            <span style="margin-right: 5px;">&#8592;</span> Zurück zum Login
+            <span style="margin-right: 5px;">&#8592;</span> <?= $lang['zurueck_login'] ?>
         </a>
-        <h1 style="text-align: center;">Passwort zurücksetzen</h1>
+        <h1 style="text-align: center;"> <?= $lang['passwort_zurück'] ?></h1>
         <form action="forgot_password.php" method="post" class="mt-4">
             <div class="mb-3">
-                <label for="benutzername" class="form-label">Benutzername:</label>
+                <label for="benutzername" class="form-label"> <?= $lang['username'] ?>:</label>
                 <input type="text" class="form-control" id="benutzername" name="benutzername" required>
             </div>
             <div class="mb-3">
-                <label for="email" class="form-label">E-Mail-Adresse:</label>
+                <label for="email" class="form-label"> <?= $lang['email'] ?>:</label>
                 <input type="email" class="form-control" id="email" name="email" required>
             </div>
             <div class="mb-3">
-                <label for="sicherheitsfrage" class="form-label">Sicherheitsfrage:</label>
+                <label for="sicherheitsfrage" class="form-label"> <?= $lang['sicherheitsfrage'] ?>:</label>
                 <select class="form-select" id="sicherheitsfrage" name="sicherheitsfrage" required>
-                    <option selected disabled value="">Frage auswählen</option>
-                    <option value="Was ist der Geburtsort Ihres Vaters?">Was ist der Geburtsort Ihres Vaters?</option>
-                    <option value="Wie lautet der Name Ihres besten Freundes in der Kindheit?">Wie lautet der Name Ihres besten Freundes in der Kindheit?</option>
-                    <option value="Was ist Ihr Lieblingsfilm?">Was ist Ihr Lieblingsfilm?</option>
-                    <option value="Was ist Ihr Lieblingsessen?">Was ist Ihr Lieblingsessen?</option>
+                    <option selected disabled value=""> <?= $lang['frage_auswählen'] ?></option>
+                    <option value="Was ist der Geburtsort Ihres Vaters?"> <?= $lang['geburtsort_vater'] ?></option>
+                    <option value="Wie lautet der Name Ihres besten Freundes in der Kindheit?"> <?= $lang['name_bester_freund'] ?></option>
+                    <option value="Was ist Ihr Lieblingsfilm?"> <?= $lang['lieblingsfilm'] ?></option>
+                    <option value="Was ist Ihr Lieblingsessen?"> <?= $lang['lieblingsessen'] ?></option>
                 </select>
             </div>
             <div class="mb-3">
-                <label for="sicherheitsantwort" class="form-label">Sicherheitsantwort:</label>
+                <label for="sicherheitsantwort" class="form-label"> <?= $lang['antwort'] ?>:</label>
                 <input type="text" class="form-control" id="sicherheitsantwort" name="sicherheitsantwort" required>
             </div>
             <div class="mb-3">
-                <label for="passwort" class="form-label">Neues Passwort:</label>
+                <label for="passwort" class="form-label"> <?= $lang['neues_passwort'] ?></label>
                 <input type="password" class="form-control" id="passwort" name="passwort" required>
             </div>
             <div class="mb-3">
-                <label for="passwort-confirm" class="form-label">Passwort bestätigen:</label>
+                <label for="passwort-confirm" class="form-label"> <?= $lang['passwort_bestätigen'] ?></label>
                 <input type="password" class="form-control" id="passwort-confirm" name="passwort-confirm" required>
             </div>
-            <button type="submit" class="btn btn-primary">Passwort zurücksetzen</button>
+            <button type="submit" class="btn btn-primary"> <?= $lang['passwort_zurück'] ?></button>
         </form>
     </div>
 

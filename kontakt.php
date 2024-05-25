@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hauptseite</title>
+    <title>Kontakt</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
@@ -64,6 +64,9 @@
                                 <li><a class="dropdown-item" href="cofortg.php"><?= $lang['controlling_fort'] ?></a></li>
                             </ul>
                         </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reservierungen.php"><?= $lang['meine_reservierungen'] ?></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="kontakt.php"><?= $lang['contact'] ?></a>
@@ -155,42 +158,70 @@
         </div>
     </nav>
     <script>
-    function validateForm() {
-        var benutzername = document.getElementById('benutzername').value;
-        var email = document.getElementById('email').value;
-        var betreff = document.getElementById('betreff').value;
-        var nachricht = document.getElementById('nachricht').value;
+function validateForm() {
+    var benutzername = document.getElementById('benutzername').value;
+    var email = document.getElementById('email').value;
+    var betreff = document.getElementById('betreff').value;
+    var nachricht = document.getElementById('nachricht').value;
 
-        if (benutzername === "") {
-            document.getElementById('benutzernameError').innerText = "Bitte geben Sie Ihren Benutzernamen ein.";
-            return false;
-        } else {
-            document.getElementById('benutzernameError').innerText = "";
-        }
+    // Meldungen in Deutsch
+    var benutzernameErrorDE = "Bitte geben Sie Ihren Benutzernamen ein.";
+    var emailErrorDE = "Bitte geben Sie Ihre E-Mail-Adresse ein.";
+    var betreffErrorDE = "Bitte geben Sie den Betreff ein.";
+    var nachrichtErrorDE = "Bitte geben Sie Ihre Nachricht ein.";
 
-        if (email === "") {
-            document.getElementById('emailError').innerText = "Bitte geben Sie Ihre E-Mail-Adresse ein.";
-            return false;
-        } else {
-            document.getElementById('emailError').innerText = "";
-        }
+    // Meldungen in Englisch
+    var benutzernameErrorEN = "Please enter your username.";
+    var emailErrorEN = "Please enter your email address.";
+    var betreffErrorEN = "Please enter the subject.";
+    var nachrichtErrorEN = "Please enter your message.";
 
-        if (betreff === "") {
-            document.getElementById('betreffError').innerText = "Bitte geben Sie den Betreff ein.";
-            return false;
-        } else {
-            document.getElementById('betreffError').innerText = "";
-        }
-
-        if (nachricht === "") {
-            document.getElementById('nachrichtError').innerText = "Bitte geben Sie Ihre Nachricht ein.";
-            return false;
-        } else {
-            document.getElementById('nachrichtError').innerText = "";
-        }
-
-        return true;
+    // Setzen der entsprechenden Meldungen basierend auf der aktuellen Sprache
+    var benutzernameError, emailError, betreffError, nachrichtError;
+    if ("<?= $_SESSION['lang'] ?>" === "de") {
+        benutzernameError = benutzernameErrorDE;
+        emailError = emailErrorDE;
+        betreffError = betreffErrorDE;
+        nachrichtError = nachrichtErrorDE;
+    } else {
+        benutzernameError = benutzernameErrorEN;
+        emailError = emailErrorEN;
+        betreffError = betreffErrorEN;
+        nachrichtError = nachrichtErrorEN;
     }
+
+    if (benutzername === "") {
+        document.getElementById('benutzernameError').innerText = benutzernameError;
+        return false;
+    } else {
+        document.getElementById('benutzernameError').innerText = "";
+    }
+
+    if (email === "") {
+        document.getElementById('emailError').innerText = emailError;
+        return false;
+    } else {
+        document.getElementById('emailError').innerText = "";
+    }
+
+    if (betreff === "") {
+        document.getElementById('betreffError').innerText = betreffError;
+        return false;
+    } else {
+        document.getElementById('betreffError').innerText = "";
+    }
+
+    if (nachricht === "") {
+        document.getElementById('nachrichtError').innerText = nachrichtError;
+        return false;
+    } else {
+        document.getElementById('nachrichtError').innerText = "";
+    }
+
+    return true;
+}
+
+
 
     document.addEventListener('DOMContentLoaded', function() {
         // Funktion zum Ausblenden der Meldung nach 5 Sekunden

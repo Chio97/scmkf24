@@ -24,7 +24,7 @@ if (!isset($_SESSION['benutzername'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hauptseite</title>
+    <title>Meine Reservierungen</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
@@ -40,9 +40,9 @@ if (!isset($_SESSION['benutzername'])) {
         
         .card-img-top {
             height: 200px;
-            /* Fixiert die Höhe der Bilder */
+
             object-fit: cover;
-            /* Sorgt dafür, dass die Bilder gut aussehen */
+
         }
         
         .container.mt-4 {
@@ -79,6 +79,9 @@ if (!isset($_SESSION['benutzername'])) {
                                 <li><a class="dropdown-item" href="cofortg.php"><?= $lang['controlling_fort'] ?></a></li>
                             </ul>
                         </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reservierungen.php"><?= $lang['meine_reservierungen'] ?></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="kontakt.php"><?= $lang['contact'] ?></a>
@@ -147,44 +150,62 @@ if (!isset($_SESSION['benutzername'])) {
             echo "<table class='table'>";
             echo "<thead><tr><th>" . $lang['reservierungsid'] . "</th><th>" . $lang['termin'] . "</th><th>" . $lang['modul'] . "</th><th>" . $lang['schulungsart'] . "</th><th>" . $lang['sprache'] . "</th><th>" . $lang['vorname'] . "</th><th>" . $lang['nachname'] . "</th><th>" . $lang['username'] . "</th><th>" . $lang['rechnung'] . "</th></tr></thead>";
             echo "<tbody>";
+
             while ($row = $result->fetch_assoc()) {
+
 
                 $bezahltString = $row['bezahlt'] ? $lang['bezahlt'] : $lang['nicht_bezahlt'];
                 $bezahltClass = $row['bezahlt'] ? "text-success" : "text-danger";
-                
+
+
+                $reservierungsid = isset($row['reservierungsid']) ? htmlspecialchars($row['reservierungsid']) : '';
+                $termin = isset($row['termin']) ? htmlspecialchars($row['termin']) : '';
+                $modul_schwierigkeit = isset($row['modul_schwierigkeit']) ? htmlspecialchars($row['modul_schwierigkeit']) : '';
+                $schulungsart = isset($row['schulungsart']) ? htmlspecialchars($row['schulungsart']) : '';
+                $sprache = isset($row['sprache']) ? htmlspecialchars($row['sprache']) : '';
+                $vorname = isset($row['vorname']) ? htmlspecialchars($row['vorname']) : '';
+                $name = isset($row['name']) ? htmlspecialchars($row['name']) : '';
+                $benutzername = isset($row['benutzername']) ? htmlspecialchars($row['benutzername']) : '';
+                $traeger_vorname = isset($row['traeger_vorname']) ? htmlspecialchars($row['traeger_vorname']) : '';
+                $traeger_nachname = isset($row['traeger_nachname']) ? htmlspecialchars($row['traeger_nachname']) : '';
+                $strasse = isset($row['strasse']) ? htmlspecialchars($row['strasse']) : '';
+                $stadt = isset($row['stadt']) ? htmlspecialchars($row['stadt']) : '';
+                $plz = isset($row['plz']) ? htmlspecialchars($row['plz']) : '';
+            
                 echo "<tr>
-                        <td>" . htmlspecialchars($row['reservierungsid']) . "</td>
-                        <td>" . htmlspecialchars($row['termin']) . "</td>
-                        <td>" . htmlspecialchars($row['modul_schwierigkeit']) . "</td>
-                        <td>" . htmlspecialchars($row['schulungsart']) . "</td>
-                        <td>" . htmlspecialchars($row['sprache']) . "</td>
-                        <td>" . htmlspecialchars($row['vorname']) . "</td>
-                        <td>" . htmlspecialchars($row['name']) . "</td>
-                        <td>" . htmlspecialchars($row['benutzername']) . "</td>
-                        <td class='$bezahltClass'>" . htmlspecialchars($bezahltString) . "</td>
+                        <td>" . $reservierungsid . "</td>
+                        <td>" . $termin . "</td>
+                        <td>" . $modul_schwierigkeit . "</td>
+                        <td>" . $schulungsart . "</td>
+                        <td>" . $sprache . "</td>
+                        <td>" . $vorname . "</td>
+                        <td>" . $name . "</td>
+                        <td>" . $benutzername . "</td>
+                        <td class='$bezahltClass'>" . $bezahltString . "</td>
                         <td> 
                         <form class='delete-form' method='POST' action='stornieren.php'>
-    <input type='hidden' name='reservierungsid' value='" . $row['reservierungsid'] . "'>
-    <button type='button' onclick='confirmDelete(this.form)' class='btn btn-danger'>" . $lang['reservierung_stornieren'] . "</button>
-</form>
-<button type='button' class='btn btn-info btn-sm' data-bs-toggle='modal' data-bs-target='#rechnungstraegerModal" . $row['reservierungsid'] . "'>
-    <i class='fas fa-info-circle'></i> " . $lang['rechnungsträger'] . "
-</button>
-</td>
-</tr>";
-                      echo "<div class='modal fade' id='rechnungstraegerModal" . $row['reservierungsid'] . "' tabindex='-1' aria-labelledby='rechnungstraegerModalLabel" . $row['reservierungsid'] . "' aria-hidden='true'>
+            <input type='hidden' name='reservierungsid' value='" . $reservierungsid . "'>
+            <button type='button' onclick='confirmDelete(this.form)' class='btn btn-danger'>" . $lang['reservierung_stornieren'] . "</button>
+            </form>
+            <button type='button' class='btn btn-info btn-sm' data-bs-toggle='modal' data-bs-target='#rechnungstraegerModal" . $reservierungsid . "'>
+            <i class='fas fa-info-circle'></i> " . $lang['rechnungsträger'] . "
+            </button>
+            </td>
+            </tr>";
+
+                echo "<div class='modal fade' id='rechnungstraegerModal" . $reservierungsid . "' tabindex='-1' aria-labelledby='rechnungstraegerModalLabel" . $reservierungsid . "' aria-hidden='true'>
                       <div class='modal-dialog modal-dialog-centered'>
                           <div class='modal-content'>
                               <div class='modal-header'>
-                                  <h5 class='modal-title' id='rechnungstraegerModalLabel" . $row['reservierungsid'] . "'>" . $lang['rechnungsträger_information'] . "</h5>
+                                  <h5 class='modal-title' id='rechnungstraegerModalLabel" . $reservierungsid . "'>" . $lang['rechnungsträger_information'] . "</h5>
                                   <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                               </div>
                               <div class='modal-body'>
-                                  <p><strong>" . $lang['vorname'] . "</strong> " . htmlspecialchars($row['traeger_vorname']) . "</p>
-                                  <p><strong>". $lang['nachname'] ."</strong> " . htmlspecialchars($row['traeger_nachname']) . "</p>
-                                  <p><strong>". $lang['straße'] ."</strong> " . htmlspecialchars($row['strasse']) . "</p>
-                                  <p><strong>". $lang['stadt'] ."</strong> " . htmlspecialchars($row['stadt']) . "</p>
-                                  <p><strong>". $lang['plz'] ."</strong> " . htmlspecialchars($row['plz']) . "</p>
+                                  <p><strong>" . $lang['vorname'] . " : </strong> " . $traeger_vorname . "</p>
+                                  <p><strong>". $lang['nachname'] ." : </strong> " . $traeger_nachname . "</p>
+                                  <p><strong>". $lang['straße'] ." : </strong> " . $strasse . "</p>
+                                  <p><strong>". $lang['stadt'] ." : </strong> " . $stadt . "</p>
+                                  <p><strong>". $lang['plz'] ." : </strong> " . $plz . "</p>
                               </div>
                               <div class='modal-footer'>
                                   <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Schließen</button>
@@ -192,9 +213,8 @@ if (!isset($_SESSION['benutzername'])) {
                           </div>
                       </div>
                   </div>";
-                  
-                  
             }
+            
             echo "</tbody></table>";
         } else {
             echo "<p class='alert alert-info'>Keine Reservierungen gefunden.</p>";
@@ -248,17 +268,17 @@ function confirmDelete(form) {
         cancelButtonText: '<?= $lang['nein_abbrechen'] ?>'
     }).then((result) => {
         if (result.isConfirmed) {
-            // Erstelle ein verstecktes Input-Element, das die Aktion spezifiziert
+            
             var input = document.createElement('input');
             input.type = 'hidden';
             input.name = 'action';
             input.value = 'delete';
-            // Füge das versteckte Element zum Formular hinzu und reiche es ein
+
             form.appendChild(input);
             form.submit();
         }
     });
-    return false; // Verhindere das Standardverhalten des Buttons
+    return false; 
 }
 </script>
 

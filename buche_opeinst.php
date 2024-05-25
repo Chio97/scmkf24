@@ -1,5 +1,12 @@
 <?php
 session_start();
+if (isset($_SESSION['notification'])) {
+    $notification = $_SESSION['notification'];
+    echo '<div class="alert alert-' . ($notification['status'] == 'success' ? 'success' : 'danger') . '">';
+    echo htmlspecialchars($notification['message']);
+    echo '</div>';
+    unset($_SESSION['notification']);
+}
 include 'db.php';  // Stellen Sie sicher, dass Ihre Datenbankverbindung korrekt ist.
 if (!isset($_SESSION['lang'])) {
     $_SESSION['lang'] = 'de'; // Standardmäßig Deutsch
@@ -30,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $resultCheck = $stmtCheck->get_result();
         if ($resultCheck->num_rows > 0) {
             // Benutzer hat diesen Termin bereits gebucht
-            $_SESSION['notification'] = ['status' => 'error', 'message' => 'Sie haben diesen Termin bereits gebucht.'];
+            $_SESSION['notification'] = ['status' => 'error', 'message' => $lang['termin_bereits_gebucht']];
             header("Location: opeinst.php");
             exit();
         } else {
@@ -42,9 +49,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 $stmt->bind_param("sssssss", $traeger_vorname, $traeger_nachname, $benutzername, $strasse, $stadt, $plz, $termin);
                 if ($stmt->execute()) {
-                    $_SESSION['notification'] = ['status' => 'success', 'message' => 'Die Schulung wurde erfolgreich gebucht! Sie können Ihre Reservierung bei Meine Reservierungen in Ihrem Profil anschauen!'];
+                    $_SESSION['notification'] = ['status' => 'success', 'message' => $lang['buchung_erfolgreich']];
                 } else {
-                    $_SESSION['notification'] = ['status' => 'error', 'message' => 'Fehler beim Buchen der Schulung: ' . $stmt->error];
+                    $_SESSION['notification'] = ['status' => 'error', 'message' => $lang['buchung_fehlgeschlagen'] . $stmt->error];
                 }
                 $stmt->close();
             }
@@ -52,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
     } else {
-        $_SESSION['notification'] = ['status' => 'error', 'message' => 'Bitte füllen Sie alle erforderlichen Felder aus.'];
+        $_SESSION['notification'] = ['status' => 'error', 'message' => $lang['felder_ausfuellen']];
         header("Location: opeinst.php");
         exit();
     }

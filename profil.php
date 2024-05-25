@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Profil</title>
+    <title>Profildaten bearbeiten</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -24,13 +24,13 @@ if (isset($_POST['benutzername'])) {
 }
 
 if (!isset($_SESSION['lang'])) {
-    $_SESSION['lang'] = 'de'; // Standardmäßig Deutsch
+    $_SESSION['lang'] = 'de'; 
 }
 if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'de'])) {
-    $_SESSION['lang'] = $_GET['lang']; // Sprache ändern, wenn über GET-Parameter angefordert
+    $_SESSION['lang'] = $_GET['lang']; 
 }
 
-// Sprachdateien basierend auf der gewählten Sprache laden
+// Sprachdatei
 $lang = require 'languages/' . $_SESSION['lang'] . '.php';
 
 // Datenbankverbindung
@@ -49,11 +49,11 @@ $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    // Use fetched data instead of POST data
+
     $vorname = $row['vorname'];
     $name = $row['name'];
     $benutzername = $row['benutzername'];
-    $email = $row['email']; // Assuming you have this in your table and form
+    $email = $row['email']; 
     $adresse = $row['adresse'];
     $plz = $row['plz'];
     $stadt = $row['stadt'];
@@ -108,6 +108,9 @@ $conn->close();
                                 <li><a class="dropdown-item" href="cofortg.php"><?= $lang['controlling_fort'] ?></a></li>
                             </ul>
                         </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reservierungen.php"><?= $lang['meine_reservierungen'] ?></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="kontakt.php"><?= $lang['contact'] ?></a>
@@ -220,7 +223,7 @@ function confirmDelete() {
     <div style="min-height: 22vh;">
         <br>
     </div>
-    <nav class="navbar fixed-bottom bg-body-tertiary">
+    <nav class="navbar bg-body-tertiary">
 
         <nav class="nav flex-column">
             <a class="nav-link" href="agb.html"><?= $lang['agb'] ?></a>

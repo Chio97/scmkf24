@@ -85,8 +85,8 @@ return [
 'an_wen_o_f3' => 'As a product manager, you are curious about the administration of applications',
 'an_wen_o_f4' => 'You already work with the module on a daily basis',
 'zielgruppe_t_c' => 'For the areas of scheduling and/or inventory controlling',
-'book_co_e' => 'Book now a Controlling Training course for beginners',
-'book_co_f' => 'Book now an advanced Controlling Training course',
+'buchen_co_e' => 'Book now a Controlling Training course for beginners',
+'buchen_co_f' => 'Book now an advanced Controlling Training course',
 'textblock1_ce_ü' => 'Manage key figures with GIB Controlling',
 'textblock1_ce_t' => 'Using practical examples, we will show you how to interpret and form key figures, classify materials using ABC and XYZ analyses and how you can benefit from the effective use of the coverage matrix. You will learn how
 navigate safely through plant and material numbers and how to use different aggregation levels for your purposes. Get to know the supporting, dynamic master data maintenance with the help of the formula system and the MRP profiles
@@ -142,11 +142,55 @@ and the MRP profiles.',
 'bezahlt' => 'Paid',
 'nicht_bezahlt' => 'Not paid',
 'reservierung_stornieren' => 'Cancel your Reservation',
-'rechnungsträger' => 'Invoice recipient',
-'rechnungsträger_information' => 'Invoice  information',
+'rechnungsträger' => 'Invoice payer',
+'rechnungsträger_information' => 'Invoice payer information',
 'erhalt_rechnung' => 'After receiving the invoice, you have 14 days to reconcile the invoice. Otherwise the reservation will be deleted.',
 'wenn_rechnung_bezahlt' => 'If the invoice has been paid, you will receive access data for the SAP system 48 hours before the course starts',
 'wirklich_stornieren' => 'Do you really want to cancel this reservation?',
+//register1.php
+'zurueck_login' => 'Back to the login page',
+'erstellen_konto' => 'Create a new account',
+'persönliche_daten' => 'Personal data',
+'firmenanschrifft' => 'Company address',
+'firmenanschrifft_t' => 'will be used as invoice address for postings',
+'sicherheitsfrage' => 'Security question',
+'frage_auswählen' => 'Select question',
+'geburtsort_vater' => 'What is your fathers place of birth?',
+'name_bester_freund' => 'What is the name of your childhood best friend?',
+'lieblingsfilm' => 'What is your favorite movie?',
+'lieblingsessen' => 'What is your favorite food?',
+'antwort' => 'Answer',
+'kontoerstellen' => 'Create account',
+'passwort_zurück' => 'Reset your passwort',
+'passwort_vergessen' => 'Forgot your password?',
+//update.php
+'daten_geändert' => 'Successfully changed',
+'keine_änderung' => 'No changes made',
+'profil_gelöscht' => 'Account successfully deleted',
+'fehler_löschen' => 'Error deleting the profile',
+//registrations_success.php
+'sie_werde_weitergeleitet' => 'You are about to be redirected...',
+
+'field_required' => 'Fill out this field!',
+
+'termin_bereits_gebucht' => 'You have already booked this appointment.',
+'datenbankfehler' => 'Database error: ',
+'buchung_erfolgreich' => 'The training has been successfully booked! You can view your reservation in My Reservations in your profile!',
+'buchung_fehlgeschlagen' => 'Error booking the training: ',
+'felder_ausfuellen' => 'Please fill in all required fields.',
+//stornieren.php
+'reservierung_storniert' => 'Reservation successfully canceled',
+'reservierung_nicht_storniert' => 'Error while canceling',
+
+
+'einsteiger' => 'Beginner',
+'fortgeschritten' => 'Advanced',
+
+//passwort.php
+'passwort_geaendert' => 'Password successfully changed!',
+'passwort_nicht_geaendert' => 'Error updating password.',
+'passwort_fehler' => 'The old password is incorrect or the new passwords do not match.',
+'passwort_abruf_fehler' => 'Error retrieving the old password.',
 ];
 ?>
 
