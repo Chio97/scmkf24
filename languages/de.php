@@ -183,6 +183,7 @@ umsetzen. Sie können eine automatische Berechnung von Sicherheits- und Meldebes
 'datenbankfehler' => 'Datenbankfehler: ',
 'buchung_erfolgreich' => 'Die Schulung wurde erfolgreich gebucht! Sie können Ihre Reservierung bei Meine Reservierungen in Ihrem Profil anschauen!',
 'buchung_fehlgeschlagen' => 'Fehler beim Buchen der Schulung: ',
+'termin_ausgebucht' => 'Termin ist ausgebucht',
 'felder_ausfuellen' => 'Bitte füllen Sie alle erforderlichen Felder aus.',
 
 
@@ -198,6 +199,21 @@ umsetzen. Sie können eine automatische Berechnung von Sicherheits- und Meldebes
 'passwort_nicht_geaendert' => 'Fehler beim Aktualisieren des Passworts.',
 'passwort_fehler' => 'Das alte Passwort ist nicht korrekt oder die neuen Passwörter stimmen nicht überein.',
 'passwort_abruf_fehler' => 'Fehler beim Abrufen des alten Passworts.',
+
+'language' =>'Sprache',
+
+'weitergeleitet'=>'Sie werden gleich weitergeleitet...',
+'passwörter_stimmen_nicht' => 'Die eingegebenen Passwörter stimmen nicht überein',
+'neues_profil_erstellt'=>' Neues Profil wurde erstellt, Sie können sich in ein paar Sekunden anmelden...',
+
+
+'mind_acht'=> '(mindestens 8 Zeichen lang)',
+
+'passwort_muss_acht' => 'Passwort muss mindestens 8 Zeichen lang sein',
+
+
+'keine_reservierungen_gefunden' => 'Keine Reservierungen gefunden',
+
 
 ];
 ?>

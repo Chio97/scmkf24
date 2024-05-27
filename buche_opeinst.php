@@ -7,10 +7,13 @@ if (isset($_SESSION['notification'])) {
     echo '</div>';
     unset($_SESSION['notification']);
 }
+
 include 'db.php';  // Stellen Sie sicher, dass Ihre Datenbankverbindung korrekt ist.
+
 if (!isset($_SESSION['lang'])) {
     $_SESSION['lang'] = 'de'; // Standardmäßig Deutsch
 }
+
 if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'de'])) {
     $_SESSION['lang'] = $_GET['lang']; // Sprache ändern, wenn über GET-Parameter angefordert
 }
@@ -41,22 +44,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: opeinst.php");
             exit();
         } else {
-            // Führe die Buchung durch
-            $sql = "INSERT INTO reservierung (traeger_vorname, traeger_nachname, benutzername, strasse, stadt, plz, termin) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            if ($stmt === false) {
-                $_SESSION['notification'] = ['status' => 'error', 'message' => 'Datenbankfehler: ' . $conn->error];
+            // Überprüfen, ob der Termin ausgebucht ist
+            $sqlCount = "SELECT COUNT(*) AS anzahl_anmeldungen FROM reservierung WHERE termin = ?";
+            $stmtCount = $conn->prepare($sqlCount);
+            $stmtCount->bind_param("s", $termin);
+            $stmtCount->execute();
+            $resultCount = $stmtCount->get_result();
+            $rowCount = $resultCount->fetch_assoc();
+
+            if ($rowCount['anzahl_anmeldungen'] >= 8) {
+                // Termin ist ausgebucht
+                $_SESSION['notification'] = ['status' => 'error', 'message' => $lang['termin_ausgebucht']];
+                header("Location: opeinst.php");
+                exit();
             } else {
-                $stmt->bind_param("sssssss", $traeger_vorname, $traeger_nachname, $benutzername, $strasse, $stadt, $plz, $termin);
-                if ($stmt->execute()) {
-                    $_SESSION['notification'] = ['status' => 'success', 'message' => $lang['buchung_erfolgreich']];
-                } else {
-                    $_SESSION['notification'] = ['status' => 'error', 'message' => $lang['buchung_fehlgeschlagen'] . $stmt->error];
-                }
-                $stmt->close();
+                                // Unternehmensname aus der Tabelle 'benutzerdaten' abrufen
+                                $sqlFirma = "SELECT unternehmen FROM nutzerdaten WHERE benutzername = ?";
+                                $stmtFirma = $conn->prepare($sqlFirma);
+                                $stmtFirma->bind_param("s", $benutzername);
+                                $stmtFirma->execute();
+                                $resultFirma = $stmtFirma->get_result();
+                                $rowFirma = $resultFirma->fetch_assoc();
+                                $unternehmen = $rowFirma['unternehmen'];
+                                
+                                $sql = "INSERT INTO reservierung (traeger_vorname, traeger_nachname, benutzername, strasse, stadt, plz, termin, unternehmen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                                $stmt = $conn->prepare($sql);
+                                if ($stmt === false) {
+                                    $_SESSION['notification'] = ['status' => 'error', 'message' => 'Datenbankfehler: ' . $conn->error];
+                                } else {
+                                    $stmt->bind_param("ssssssss", $traeger_vorname, $traeger_nachname, $benutzername, $strasse, $stadt, $plz, $termin, $unternehmen);
+                                    if ($stmt->execute()) {
+                                        $_SESSION['notification'] = ['status' => 'success', 'message' => $lang['buchung_erfolgreich']];
+                                    } else {
+                                        $_SESSION['notification'] = ['status' => 'error', 'message' => $lang['buchung_fehlgeschlagen'] . $stmt->error];
+                                    }
+                                    $stmt->close();
+                                }
+                header("Location: opeinst.php");
+                exit();
             }
-            header("Location: opeinst.php");
-            exit();
         }
     } else {
         $_SESSION['notification'] = ['status' => 'error', 'message' => $lang['felder_ausfuellen']];

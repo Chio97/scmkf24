@@ -1,132 +1,18 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Operations Fortgeschritten</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
-
-<?php
-session_start();
-include 'db.php'; // Stellen Sie sicher, dass Sie Ihre Datenbankverbindungsdatei richtig einbinden
-// Beispiel nach der Buchungslogik in buche_schulung.php
-if (!isset($_SESSION['lang'])) {
-    $_SESSION['lang'] = 'de'; // Standardmäßig Deutsch
-}
-if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'de'])) {
-    $_SESSION['lang'] = $_GET['lang']; // Sprache ändern, wenn über GET-Parameter angefordert
-}
-$lang = require 'languages/' . $_SESSION['lang'] . '.php';
-
-// Überprüfung, ob der Benutzername gesetzt ist, entweder über POST (bei einem Formularsubmit) oder über SESSION (wenn bereits gespeichert)
-if (isset($_POST['benutzername'])) {
-    $benutzername = $_POST['benutzername'];
-    $_SESSION['benutzername'] = $benutzername;
-} elseif (isset($_SESSION['benutzername'])) {
-    $benutzername = $_SESSION['benutzername'];
-} else {
-    die("Benutzername nicht gesetzt. Bitte stellen Sie sicher, dass Sie angemeldet sind.");
-}
-// Datenbankverbindung
-$conn = new mysqli("Localhost", "root", "", "nutzer_db");
-if ($conn->connect_error) {
-    die("Verbindung fehlgeschlagen: " . $conn->connect_error);
-}
-
-
-// Daten abrufen
-$stmt = $conn->prepare("SELECT vorname, name, benutzername, email, unternehmen, beruf, adresse, plz, stadt FROM nutzerdaten WHERE benutzername = ?");
-$stmt->bind_param("s", $benutzername);
-$stmt->execute();
-$result = $stmt->get_result();
-
-$userData = $result->fetch_assoc();
-
-// Abfragen für verfügbare Sprachen und Termine
-$sprachenQuery = "SELECT DISTINCT sprache FROM schulungen WHERE sprache IS NOT NULL";
-$schulungsartQuery = "SELECT DISTINCT schulungsart FROM schulungen WHERE schulungsart IS NOT NULL";
-$termineQuery = "SELECT DISTINCT termin FROM schulungen WHERE modul = 'Operations' AND schwierigkeitsgrad = 'Einsteiger'";
-
-$sprachenResult = $conn->query($sprachenQuery);
-$termineResult = $conn->query($termineQuery);
-$schulungsartResult = $conn->query($schulungsartQuery);
-
-
-if (isset($_SESSION['notification'])) {
-    $notification = $_SESSION['notification'];
-    $alertType = $notification['status'] == 'success' ? 'alert-success' : 'alert-danger';
-    echo "<div id='notification-alert' class='alert $alertType' role='alert'>
-            {$notification['message']}
-          </div>";
-    unset($_SESSION['notification']); // Benachrichtigung aus der Session entfernen
-}
-
-?> 
-
+<?php include 'dbverb.php';?>
 <body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <nav class="navbar bg-body-tertiary">
-                <div class="container-fluid">
-                    <img src="images/logo.png" alt="Logo" width="25" height="25" class="d-inline-block align-text-top">
-                    <span class="navbar-brand mb-0 h1">SCM Knowledge Factory</span>
-                </div>
-            </nav>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="mainseite.php"><?= $lang['mainseite'] ?></a>
+<title>Operations Advanced</title>
+<?php include 'nav.php'; ?>
+<style>
+        .card-body .card-title,
+        .card-body .card-text {
+            color: #333; /* Dunkelgraue Farbe */
+        }
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <?= $lang['training'] ?>
-                </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="opeinst.php"><?= $lang['operations_einst'] ?></a></li>
-                                <li><a class="dropdown-item" href="opefort.php"><?= $lang['operations_fort'] ?></a></li>
-                                <li><a class="dropdown-item" href="coeinst.php"><?= $lang['controlling_einst'] ?></a></li>
-                                <li><a class="dropdown-item" href="cofortg.php"><?= $lang['controlling_fort'] ?></a></li>
-                            </ul>
-                        </li>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="reservierungen.php"><?= $lang['meine_reservierungen'] ?></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="kontakt.php"><?= $lang['contact'] ?></a>
-                    </li>
-                </ul>
-
-            </div>
-            <div class="d-flex" style="width: 11%">
-                <div class="dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownProfileLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="images/profil.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top"> <?= $lang['profile'] ?>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownProfileLink">
-                        <li><a class="dropdown-item" href="profilanzeigen.php"><?= $lang['show_profile'] ?></a></li>
-                        <li><a class="dropdown-item" href="logout.php"><?= $lang['logout'] ?></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="d-flex" style="width: 11%">
-                <a href="?lang=de" class="btn btn-link">DE</a>
-                <a href="?lang=en" class="btn btn-link">EN</a>
-            </div>
-        </div>
-    </nav>
-
-    <!--<p class="h5 mb-3">GIB Operations Schulung für Einsteiger*innen</p>-->
+</style>
 
     <div class="container-fluid mb">
         <div class="row">
             <!-- Spalte für das Bild -->
-            <!--<div class="col-md-8">-->
             <div class="col-lg-8">
                 <img src="images/operations_fortgeschrittene_1704x717.jpg" class="img-fluid" alt="...">
             </div>
@@ -144,7 +30,7 @@ if (isset($_SESSION['notification'])) {
                         <h5 class="card-title"><?= $lang['teilnehmergebühr'] ?></h5>
                         <p class="card-text">580 €</p>
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary me-md-2 fs-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <button type="button" class="btn btn-orange me-md-2 fs-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         <?= $lang['buchen'] ?>
                                                         </button>
                         <!-- Modal -->
@@ -232,7 +118,7 @@ if (isset($_SESSION['notification'])) {
                                             </div>
                                             </div>
                                             <div class="col-12">
-                                                <button class="btn btn-primary" type="submit"><?= $lang['jetzt_buchen'] ?></button>
+                                                <button class="btn btn-orange" type="submit"><?= $lang['jetzt_buchen'] ?></button>
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?= $lang['close'] ?></button>
                                             </div>
                                             <input type="hidden" name="benutzername" value="<?php echo htmlspecialchars($benutzername); ?>">
@@ -295,24 +181,8 @@ if (isset($_SESSION['notification'])) {
         </blockquote>
     </div>
     
-    <nav class="navbar bottom bg-body-tertiary">
-
-        <nav class="nav flex-column">
-            <a class="nav-link" href="agb.html"><li><?= $lang['agb'] ?></li></a>
-            <a class="nav-link" href="impressum.html">Impressum</a>
-            <a class="nav-link" href="datenschutz.html"><li><?= $lang['datenschutz'] ?></li></a>
-        </nav>
-        <div class="footer-social">
-            <div class="footer-copyright">© ifm electronic gmbh 2024</div>
-        </div>
-        <div class="footer-subsidiary" style="padding: 1%">
-            <p><strong>ifm business solutions</strong><br /> Martinshardt 19<br /> 57074&nbsp;Siegen
-            </p>
-            <p><strong>Hotline 0800 / 16 16 16 4</strong><br />
-                <strong>E-Mail&nbsp;</strong><a href="mailto:info@ifm.com">info@ifm.com</a></p>
-        </div>
-    </nav>
-
+    <?php include 'footer.php'; ?>
+</body>
     <script>
 document.addEventListener('DOMContentLoaded', function () {
     function fetchTermine() {
@@ -340,11 +210,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('schulungsartSelect').addEventListener('change', fetchTermine);
 });
 </script>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js " integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz " crossorigin="anonymous "></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
     <script>
 document.addEventListener('DOMContentLoaded', function() {
     var alertBox = document.getElementById('notification-alert');
@@ -356,6 +221,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js " integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz " crossorigin="anonymous "></script>
-</body>
-
 </html>

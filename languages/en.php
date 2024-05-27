@@ -177,6 +177,7 @@ and the MRP profiles.',
 'datenbankfehler' => 'Database error: ',
 'buchung_erfolgreich' => 'The training has been successfully booked! You can view your reservation in My Reservations in your profile!',
 'buchung_fehlgeschlagen' => 'Error booking the training: ',
+'termin_ausgebucht' => 'This date is sold out',
 'felder_ausfuellen' => 'Please fill in all required fields.',
 //stornieren.php
 'reservierung_storniert' => 'Reservation successfully canceled',
@@ -191,6 +192,18 @@ and the MRP profiles.',
 'passwort_nicht_geaendert' => 'Error updating password.',
 'passwort_fehler' => 'The old password is incorrect or the new passwords do not match.',
 'passwort_abruf_fehler' => 'Error retrieving the old password.',
+'language' =>'Language',
+
+
+'weitergeleitet'=>'You are about to be forwarded...',
+'passwörter_stimmen_nicht' => 'The password doesnt match',
+'neues_profil_erstellt'=>'New profile has been created, you can log in in a few seconds...',
+
+'mind_acht'=> '(at least 8 characters long)',
+'passwort_muss_acht' => 'Password must be at least 8 characters long',
+
+'keine_reservierungen_gefunden' => 'No reservations were found',
 ];
+
 ?>
 

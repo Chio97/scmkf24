@@ -1,61 +1,7 @@
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AGB</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
-
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <nav class="navbar bg-body-tertiary">
-                <div class="container-fluid">
-                    <img src="images/logo.png" alt="Logo" width="25" height="25" class="d-inline-block align-text-top">
-                    <span class="navbar-brand mb-0 h1">SCM Knowledge Factory</span>
-                </div>
-            </nav>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="mainseite.php">Haupseite</a>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Schulungen
-                </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="opeinst.php">Operations für Einsteiger*innen</a></li>
-                                <li><a class="dropdown-item" href="opefort.php">Operations für Fortgeschrittene</a></li>
-                                <li><a class="dropdown-item" href="coeinst.php">Controlling für Einsteiger*innen</a></li>
-                                <li><a class="dropdown-item" href="cofortg.php">Controlling für Fortgeschrittene</a></li>
-                            </ul>
-                        </li>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="reservierungen.php">Meine Reservierungen</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="kontakt.php">Kontakt</a>
-                    </li>
-                </ul>
-
-            </div>
-            <div class="d-flex" style="width: 11%">
-                <div class="dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownProfileLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="images/profil.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top"> Profil
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownProfileLink">
-                        <li><a class="dropdown-item" href="profil.php">Profil bearbeiten</a></li>
-                        <li><a class="dropdown-item" href="logout.php">Abmelden</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
+<title>AGB</title>
+<?php include 'sprache.php';
+    include 'nav.php'; ?>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -65,7 +11,7 @@
                         <div class="card-body">
                             <h5 class="card-title">AGB-Download</h5>
                             <p class="card-text">Hier können Sie die AGB-Datei herunterladen.</p>
-                            <a href="pdf/AGB.pdf" class="btn btn-primary" download>Download</a>
+                            <a href="pdf/AGB.pdf" class="btn btn-orange" download>Download</a>
                         </div>
                     </div>
                 </div>
@@ -326,23 +272,7 @@
 
 
 
-    <nav class="navbar bottom bg-body-tertiary">
-
-        <nav class="nav flex-column">
-            <a class="nav-link" href="agb.html">AGB</a>
-            <a class="nav-link" href="impressum.html">Impressum</a>
-            <a class="nav-link" href="datenschutz.html">Datenschutz</a>
-        </nav>
-        <div class="footer-social">
-            <div class="footer-copyright">© ifm electronic gmbh 2024</div>
-        </div>
-        <div class="footer-subsidiary" style="padding: 1%">
-            <p><strong>ifm business solutions</strong><br /> Martinshardt 19<br /> 57074&nbsp;Siegen
-            </p>
-            <p><strong>Hotline 0800 / 16 16 16 4</strong><br />
-                <strong>E-Mail&nbsp;</strong><a href="mailto:info@ifm.com">info@ifm.com</a></p>
-        </div>
-    </nav>
+    <?php include 'footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js " integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz " crossorigin="anonymous "></script>
 </body>
 

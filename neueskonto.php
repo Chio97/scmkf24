@@ -115,8 +115,8 @@ $lang = require 'languages/' . $_SESSION['lang'] . '.php';
                     <input type="text" class="form-control" id="sicherheitsantwort" name="sicherheitsantwort" required>
                 </div>
                 <div class="col-md-6">
-                    <label for="passwort" class="form-label"><?= $lang['password'] ?></label>
-                    <input type="password" class="form-control" id="passwort" name="passwort" required>
+                    <label for="passwort" class="form-label"><?= $lang['password'] ?> <?=$lang['mind_acht']?></label>
+                    <input type="password" class="form-control" id="passwort" name="passwort" pattern=".{8,}" title="<?=$lang['passwort_muss_acht']?>" required>
                 </div>
                 <div class="col-md-6">
                     <label for="passwort-confirm" class="form-label"><?= $lang['passwort_bestätigen'] ?></label>
