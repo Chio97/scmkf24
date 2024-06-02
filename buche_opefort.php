@@ -68,13 +68,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $resultFirma = $stmtFirma->get_result();
                 $rowFirma = $resultFirma->fetch_assoc();
                 $unternehmen = $rowFirma['unternehmen'];
-
-                $sql = "INSERT INTO reservierung (traeger_vorname, traeger_nachname, benutzername, strasse, stadt, plz, termin, unternehmen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                
+                // Schulungs-ID aus der Tabelle 'schulungen' basierend auf dem Termin abrufen
+                $sqlSchulung = "SELECT schulungsid FROM schulungen WHERE termin = ?";
+                $stmtSchulung = $conn->prepare($sqlSchulung);
+                $stmtSchulung->bind_param("s", $termin);
+                $stmtSchulung->execute();
+                $resultSchulung = $stmtSchulung->get_result();
+                $rowSchulung = $resultSchulung->fetch_assoc();
+                $schulungsid = $rowSchulung['schulungsid'];
+                
+                if ($unternehmen == "ifm business solutions") {
+                    $sql = "INSERT INTO reservierung (traeger_vorname, traeger_nachname, benutzername, strasse, stadt, plz, termin, unternehmen, bezahlt, s_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, ?)";
+                } else {
+                    $sql = "INSERT INTO reservierung (traeger_vorname, traeger_nachname, benutzername, strasse, stadt, plz, termin, unternehmen, bezahlt, s_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, ?)";
+                }
                 $stmt = $conn->prepare($sql);
                 if ($stmt === false) {
                     $_SESSION['notification'] = ['status' => 'error', 'message' => 'Datenbankfehler: ' . $conn->error];
                 } else {
-                    $stmt->bind_param("ssssssss", $traeger_vorname, $traeger_nachname, $benutzername, $strasse, $stadt, $plz, $termin, $unternehmen);
+                    $stmt->bind_param("sssssssss", $traeger_vorname, $traeger_nachname, $benutzername, $strasse, $stadt, $plz, $termin, $unternehmen, $schulungsid);
                     if ($stmt->execute()) {
                         $_SESSION['notification'] = ['status' => 'success', 'message' => $lang['buchung_erfolgreich']];
                     } else {

@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include 'db.php'; // Stellen Sie sicher, dass Ihre Datenbankverbindungsdatei richtig einbinden
+include 'db.php'; //  Datenbankverbindungsdatei 
 
 
 if (!isset($_SESSION['benutzername'])) {
@@ -26,6 +26,7 @@ if (!isset($_SESSION['benutzername'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My Reservations</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .card {
@@ -45,9 +46,7 @@ if (!isset($_SESSION['benutzername'])) {
 
         }
         
-        .container.mt-4 {
-            margin-bottom: 180px;
-        }
+
     </style>
 </head>
 

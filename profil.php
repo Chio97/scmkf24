@@ -60,11 +60,13 @@ $conn->close();
 </script>
 <?php endif; ?>
 
-
-
+<head>
+    
+</head>
+<?php include 'nav.php'; ?>
 <body>
 <title>Change Profile</title>
-<?php include 'nav.php'; ?>
+
 
     <div class="container-sm">
         <h1><?= $lang['profil_bearbeiten'] ?></h1>

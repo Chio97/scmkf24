@@ -6,7 +6,7 @@ return [
 'login' => 'Einlogen',
 'no_account' => 'Kein Konto? Jetzt Registrieren',
     'welcome' => 'Willkommen bei der SCM Knowledge Factory!',
-    'mainseite' => 'Hauptseite',
+    'home' => 'Home',
     'training' => 'Schulungen',
     'contact' => 'Kontakt',
     'logout' => 'Abmelden',
@@ -137,6 +137,7 @@ umsetzen. Sie können eine automatische Berechnung von Sicherheits- und Meldebes
 'passwort_bestätigen' => 'Passwort bestätigen: ',
 'passwort_ändern' => 'Passwort ändern',
 //reservierungen.php
+'schulungsid' => 'SchulungsID',
 'reservierungsid' => 'ReservierungsID',
 'termin' => 'Termin',
 'modul' => 'Kurs',
@@ -155,11 +156,11 @@ umsetzen. Sie können eine automatische Berechnung von Sicherheits- und Meldebes
 'zurueck_login' => 'Zurück zum Login Seite',
 'erstellen_konto' => 'Erstellen Sie jetzt ein neues Konto!',
 'persönliche_daten' => 'Persönliche Daten',
-'firmenanschrifft' => 'Firmenanschrifft',
+'firmenanschrifft' => 'Firmenanschrift',
 'firmenanschrifft_t' => 'wird bei Buchungen als Rechnungsanschrifft übernommen',
 'sicherheitsfrage' => 'Sicherheitsfrage',
 'frage_auswählen' => 'Frage auswählen',
-'geburtstort_vater' => 'Was ist der Geburtsort Ihres Vaters',
+'geburtsort_vater' => 'Was ist der Geburtsort Ihres Vaters',
 'name_bester_freund' => 'Wie lautet der Name Ihres besten Freundes in der Kindheit?',
 'lieblingsfilm' => 'Was ist Ihr Lieblingsfilm?',
 'lieblingsessen' => 'Was ist Ihr Lieblingsessen?',
@@ -199,7 +200,8 @@ umsetzen. Sie können eine automatische Berechnung von Sicherheits- und Meldebes
 'passwort_nicht_geaendert' => 'Fehler beim Aktualisieren des Passworts.',
 'passwort_fehler' => 'Das alte Passwort ist nicht korrekt oder die neuen Passwörter stimmen nicht überein.',
 'passwort_abruf_fehler' => 'Fehler beim Abrufen des alten Passworts.',
-
+'passwort_zurueckgesetzt' => 'Passwort wurde erfolgreich zurückgesetzt',
+'passwort_nicht_zurueckgesetzt' => 'Passwort konnte nicht zurückgesetzt werden',
 'language' =>'Sprache',
 
 'weitergeleitet'=>'Sie werden gleich weitergeleitet...',
@@ -214,6 +216,9 @@ umsetzen. Sie können eine automatische Berechnung von Sicherheits- und Meldebes
 
 'keine_reservierungen_gefunden' => 'Keine Reservierungen gefunden',
 
+'email_existiert' => 'Diese E-Mail wurde schon benutzt!',
+'benutzername_existiert' => 'Benutzername ist schon vergeben!',
+'daten_einfuegen_fehler' => 'Es konnte kein Konto eröffnet werden!'
 
 ];
 ?>

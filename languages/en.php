@@ -6,7 +6,7 @@ return [
 'login' => 'Log in',
 'no_account' => 'No account yet? Sign up here!',
     'welcome' => 'Welcome to the SCM Knowledge Factory!',
-    'mainseite' => 'Mainsite',
+    'home' => 'Home',
     'training' => 'Trainings',
     'contact' => 'Contact',
     'logout' => 'Log out',
@@ -133,6 +133,7 @@ and the MRP profiles.',
 'passwort_bestätigen' => 'Confirm your password: ',
 'passwort_ändern' => 'Change password',
 //reservierungen.php
+'schulungsid' => 'CourseID',
 'reservierungsid' => 'ReservierungsID',
 'termin' => 'Date',
 'modul' => 'Course',
@@ -192,6 +193,8 @@ and the MRP profiles.',
 'passwort_nicht_geaendert' => 'Error updating password.',
 'passwort_fehler' => 'The old password is incorrect or the new passwords do not match.',
 'passwort_abruf_fehler' => 'Error retrieving the old password.',
+'passwort_zurueckgesetzt' => 'Password was successfully reset',
+'passwort_nicht_zurueckgesetzt' => 'Password could not be reset',
 'language' =>'Language',
 
 
@@ -203,6 +206,11 @@ and the MRP profiles.',
 'passwort_muss_acht' => 'Password must be at least 8 characters long',
 
 'keine_reservierungen_gefunden' => 'No reservations were found',
+
+
+'email_existiert' => 'Diese E-Mail wurde schon benutzt!',
+'benutzername_existiert' => 'Benutzername ist schon vergeben!',
+
 ];
 
 ?>

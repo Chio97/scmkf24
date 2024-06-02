@@ -14,7 +14,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/scm_knowledge_factory/images/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+
         }
+        
+        
         
         .login-box {
             width: 100%;
@@ -22,11 +27,28 @@
             padding: 20px;
             border: 1px solid #ccc;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            background-color: white;
+            background-color: #333; /* Hintergrundfarbe der Login-Box */
+            color: white; /* Textfarbe in der Login-Box */
         }
 
         .error {
             color: red; 
+        }
+        .btn-primary {
+            background-color: #ff6c04; /* Hintergrundfarbe des Buttons */
+            border-color: #ff6c04; /* Randfarbe des Buttons */
+        }
+
+        .btn-primary:hover {
+            background-color: #b34d02; /* Hintergrundfarbe des Buttons beim Hover */
+            border-color: #b34d02; /* Randfarbe des Buttons beim Hover */
+        }
+        .login-box a {
+            color: white; /* Farbe der Links */
+        }
+
+        .login-box a:hover {
+            color: #ccc; /* Farbe der Links beim Hover */
         }
     </style>
 </head>
@@ -43,11 +65,9 @@ if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'de'])) {
 $lang = require 'languages/' . $_SESSION['lang'] . '.php';
 ?>
 <body>
-    <div class="login-box">
-        <form id="loginForm" action="login2.php" method="post">
-            <div class="text-center mb-4">
-                <img src="images/logo.png" alt="Logo" style="width: 100px;">
-            </div>
+    <div class="login-box mt-5">
+        <form id="loginForm" action="login2.php" method="post" autocomplete="off";>
+
             <div class="text-end">
                 <a href="?lang=de">DE</a> | <a href="?lang=en">EN</a>
             </div>

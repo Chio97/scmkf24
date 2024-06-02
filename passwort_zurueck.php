@@ -36,34 +36,72 @@ if (isset($_SESSION['error_message'])) {
     <title> <?= $lang['passwort_zurück'] ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+         body {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/scm_knowledge_factory/images/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+
         .register-container {
-            background-color: #f7f7f7;
+            background-color: #333; /* Hintergrundfarbe der Box */
+            color: white; /* Textfarbe in der Box */
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             max-width: 800px;
-
             margin: 20px auto;
         }
-        
+
         .btn-primary {
+            background-color: #ff6c04; /* Hintergrundfarbe des Buttons */
+            border-color: #ff6c04; /* Randfarbe des Buttons */
             width: 100%;
             padding: 10px;
         }
-        
+
+        .btn-primary:hover {
+            background-color: #e65a00; /* Hintergrundfarbe des Buttons beim Hover */
+            border-color: #e65a00; /* Randfarbe des Buttons beim Hover */
+        }
+
+        .btn-secondary {
+            background-color: #808080; /* Hintergrundfarbe des grauen Buttons */
+            color: white; /* Textfarbe des grauen Buttons */
+            border-color: #808080; /* Randfarbe des grauen Buttons */
+        }
+
+        .btn-secondary:hover {
+            background-color: #666666; /* Hintergrundfarbe des grauen Buttons beim Hover */
+            border-color: #666666; /* Randfarbe des grauen Buttons beim Hover */
+        }
+
+        .btn-link {
+            color: white; /* Farbe der Links */
+        }
+
+        .btn-link:hover {
+            color: #ccc; /* Farbe der Links beim Hover */
+        }
+        .text-end a {
+            color: white; /* Farbe der Links im text-end div */
+        }
+
+        .text-end a:hover {
+            color: #ccc; /* Farbe der Links im text-end div beim Hover */
+        }
     </style>
 </head>
 <body>
     <div class="container-sm register-container">
-    <div class="d-flex" style="width: 11%; margin-left: auto;">
-                <a href="?lang=de" class="btn btn-link">DE</a>
-                <a href="?lang=en" class="btn btn-link">EN</a>
+    <div class="text-end">
+                <a href="?lang=de">DE</a> | <a href="?lang=en">EN</a>
             </div>
+
     <a href="newindex.php" class="btn btn-secondary" style="background-color: #808080; color: #fff; border-color: #808080;">
             <span style="margin-right: 5px;">&#8592;</span> <?= $lang['zurueck_login'] ?>
         </a>
         <h1 style="text-align: center;"> <?= $lang['passwort_zurück'] ?></h1>
-        <form action="forgot_password.php" method="post" class="mt-4">
+        <form action="forgot_password.php" method="post" class="mt-4" autocomplete="off">
             <div class="mb-3">
                 <label for="benutzername" class="form-label"> <?= $lang['username'] ?>:</label>
                 <input type="text" class="form-control" id="benutzername" name="benutzername" required>

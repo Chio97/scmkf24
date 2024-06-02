@@ -18,7 +18,7 @@
             </div>
             <!-- Spalte für die Karte -->
             <div class="col-lg-4 ">
-                <div class="card border-primary mb-3">
+                <div class="card">
                     <div class="card-header"><?= $lang['kursinfo'] ?></div>
                     <div class="card-body text-primary">
                         <h5 class="card-title"><?= $lang['kursdauer'] ?></h5>
@@ -26,7 +26,7 @@
                         <h5 class="card-title"><?= $lang['veranstaltungsort'] ?></h5>
                         <p class="card-text"><?= $lang['veranstaltungsort_t'] ?></p>
                         <h5 class="card-title"><?= $lang['zielgruppe'] ?></h5>
-                        <p class="card-text">Erfahrene Anwender der Module GIB Suite Controlling und Operations</p>
+                        <p class="card-text"><?= $lang['zielgruppe_t_c'] ?></p>
                         <h5 class="card-title"><?= $lang['teilnehmergebühr'] ?></h5>
                         <p class="card-text">580 €</p>
                         <!-- Button trigger modal -->
@@ -208,16 +208,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('spracheSelect').addEventListener('change', fetchTermine);
     document.getElementById('schulungsartSelect').addEventListener('change', fetchTermine);
-});
-</script>
-    <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var alertBox = document.getElementById('notification-alert');
-    if (alertBox) {
-        setTimeout(function() {
-            alertBox.style.display = 'none';
-        }, 5000);
-    }
 });
 </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js " integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz " crossorigin="anonymous "></script>

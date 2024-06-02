@@ -33,7 +33,7 @@ $sicherheitsantwort = $_POST['sicherheitsantwort'];
 // Überprüfen, ob die Passwörter übereinstimmen
 if ($passwort !== $passwort_confirm) {
     $_SESSION['error'] = $lang['passwörter_stimmen_nicht'];
-    header("Location: registration.php"); // Weiterleitung zur Registrierungsseite
+    header("Location: neueskonto.php"); // Weiterleitung zur Registrierungsseite
     exit();
 }
 

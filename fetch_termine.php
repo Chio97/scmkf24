@@ -1,5 +1,5 @@
 <?php
-include 'db.php'; // Ihre Datenbankverbindung
+include 'db.php'; // Datenbankverbindung
 
 $sprache = $_GET['sprache'] ?? '';
 $schulungsart = $_GET['schulungsart'] ?? '';

@@ -1,6 +1,14 @@
 <?php
 session_start();
-include 'db.php'; // Stelle sicher, dass die Datenbankverbindung hergestellt wird
+include 'db.php'; // Datenbankverbindung
+if (!isset($_SESSION['lang'])) {
+    $_SESSION['lang'] = 'de';
+}
+if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'de'])) {
+    $_SESSION['lang'] = $_GET['lang'];
+}
+
+$lang = require 'languages/' . $_SESSION['lang'] . '.php';
 
 $message = "";
 
@@ -31,11 +39,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['benutzername'], $_POST
 
             // Nach dem erfolglosen Zurücksetzen des Passworts
             if ($update_stmt->execute()) {
-                $_SESSION['success_message'] = "Das Passwort wurde erfolgreich zurückgesetzt.";
+                $_SESSION['success_message'] = $lang['passwort_zurueckgesetzt'];
+                // Weiterleitung bei Erfolg
+                header("Location: passwort_zurueck.php");
+                exit();
             } else {
-                $_SESSION['error_message'] = "Passwort konnte nicht zurückgesetzt werden.";
-                // Debugging-Anweisung: Ausgabe der Fehlermeldung
-                var_dump($_SESSION['error_message']);
+                $_SESSION['error_message'] = $lang['passwort_nicht_zurueckgesetzt'];
+
             }
 
             $update_stmt->close();
@@ -45,8 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['benutzername'], $_POST
         }
     }
 }
-
-// Redirect auf passwort_zurueck.php
 header("Location: passwort_zurueck.php");
-exit();
+$_SESSION['error_message'] = $lang['passwort_nicht_zurueckgesetzt'];
+exit;
 ?>

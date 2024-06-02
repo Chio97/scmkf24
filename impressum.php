@@ -5,11 +5,11 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <p class="fs-2"><strong>Impressum der ifm electronic gmbh</strong></p>
+                <p class="fs-2"><strong>Impressum der ifm business solutions</strong></p>
                 <div class="row">
                     <div class="col-sm-7 col-xs-12">
                         <div class="col-sm-12">
-                            <p><strong>Anschrift</strong><br /> ifm electronic gmbh<br /> Friedrichstr. 1<br /> 45128 Essen<br /> Telefon&nbsp;&nbsp;02 01 / 24 22-0<br /> Telefax&nbsp;&nbsp;02 01 / 24 22-1200<br /> E-Mail&nbsp;&nbsp;info@ifm.com
+                            <p><strong>Anschrift</strong><br /> ifm business solutions<br /> Martinshardt 19<br /> 57074 Siegen<br /> Telefon&nbsp;&nbsp;02 01 / 24 22-0<br /> Telefax&nbsp;&nbsp;02 01 / 24 22-1200<br /> E-Mail&nbsp;&nbsp;info@ifm.com
                                 <br />
                                 <br />
                                 <strong>Vorsitzender der Geschäftsführung</strong><br /> Michael Marhofer<br />

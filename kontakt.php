@@ -1,30 +1,31 @@
     <?php
-    session_start();
-    if (!isset($_SESSION['lang'])) {
-        $_SESSION['lang'] = 'de'; // Standardmäßig Deutsch
-    }
-    if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'de'])) {
-        $_SESSION['lang'] = $_GET['lang']; // Sprache ändern, wenn über GET-Parameter angefordert
-    }
-    
-    // Sprachdateien basierend auf der gewählten Sprache laden
-    $lang = require 'languages/' . $_SESSION['lang'] . '.php';
+    include 'db.php';
+    include 'sprache.php';
 
-    if (!isset($_SESSION['benutzername'])) {
-        // Keine Session vorhanden, also Umleitung zur Login-Seite
-        header("Location: newindex.php");
-        exit;
-    }
+        // Annahme: Der Benutzername ist in $_SESSION['benutzername'] gespeichert
 
-    ?>
+        // SQL-Abfrage vorbereiten
+        $sql = "SELECT email FROM nutzerdaten WHERE benutzername = '" . $_SESSION['benutzername'] . "'";
 
-    <!-- Erfolgsmeldung anzeigen, wenn vorhanden -->
-    <?php if(isset($_SESSION['success_message'])): ?>
-    <div class="alert alert-success" role="alert" id="successMessage">
-        <?php echo $_SESSION['success_message']; ?>
-    </div>
-    <?php unset($_SESSION['success_message']); // Erfolgsmeldung entfernen ?>
-    <?php endif; ?>
+        // Abfrage ausführen
+        $result = $conn->query($sql);
+
+        // Überprüfen, ob die Abfrage erfolgreich war
+        if ($result->num_rows > 0) {
+            // E-Mail-Adresse aus dem Abfrageergebnis abrufen und in $email speichern
+            $row = $result->fetch_assoc();
+            $email = $row["email"];
+        } else {
+            // Fallback, falls kein Ergebnis gefunden wurde
+            $email = "";
+        }
+            // Erfolgsmeldung anzeigen, wenn vorhanden 
+    if(isset($_SESSION['success_message'])): ?>
+        <div class="alert alert-success" role="alert" id="successMessage">
+            <?php echo $_SESSION['success_message']; ?>
+        </div>
+        <?php unset($_SESSION['success_message']); // Erfolgsmeldung entfernen ?>
+        <?php endif; ?>
 
     <body>
     <title>Contact</title>
@@ -44,7 +45,7 @@
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label"><?= $lang['email'] ?></label>
-                <input type="email" class="form-control" id="email" name="email">
+                <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>">
                 <div id="emailError" class="text-danger"></div>
             </div>
             <div class="mb-3">
@@ -63,7 +64,7 @@
             </div>
             <div class="col-md-6">
                 <h2><?= $lang['kontaktinfo'] ?></h2>
-                <p><strong>Telefon:</strong> 0800 / 16 16 16 4</p>
+                <p><strong>Telefon:</strong> <a href="tel:08001616164">0800 / 16 16 16 4</a></p>
                 <p><strong>E-Mail:</strong> <a href="mailto:serxhio.zani@ifm.com">serxhio.zani@ifm.com</a></p>
                 <p><strong><?= $lang['büroadresse'] ?>:</strong><br>
                     The SUMMIT<br>
